@@ -1,0 +1,61 @@
+<?php
+
+namespace FondOfSpryker\Zed\CompanyTypeRole;
+
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeBridge;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeBridge;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+
+class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
+{
+    public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+    public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addCompanyRoleFacade($container);
+        $container = $this->addPermissionFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyRoleFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
+            return new CompanyTypeRoleToCompanyRoleFacadeBridge(
+                $container->getLocator()->companyRole()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPermissionFacade(Container $container): Container
+    {
+        $container[static::FACADE_PERMISSION] = function (Container $container) {
+            return new CompanyTypeRoleToPermissionFacadeBridge(
+                $container->getLocator()->permission()->facade()
+            );
+        };
+
+        return $container;
+    }
+}

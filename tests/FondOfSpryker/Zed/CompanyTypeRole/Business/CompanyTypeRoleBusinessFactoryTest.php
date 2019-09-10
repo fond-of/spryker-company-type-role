@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
@@ -39,6 +40,11 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
     protected $containerMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig
+     */
+    protected $configMock;
+
+    /**
      * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleBusinessFactory
      */
     protected $companyTypeRoleBusinessFactory;
@@ -70,9 +76,14 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->configMock = $this->getMockBuilder(CompanyTypeRoleConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->companyTypeRoleBusinessFactory = new CompanyTypeRoleBusinessFactory();
 
         $this->companyTypeRoleBusinessFactory->setContainer($this->containerMock);
+        $this->companyTypeRoleBusinessFactory->setConfig($this->configMock);
     }
 
     /**

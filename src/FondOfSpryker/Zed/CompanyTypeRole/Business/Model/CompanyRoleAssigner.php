@@ -2,12 +2,14 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Model;
 
+use FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacade;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTypeTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
 class CompanyRoleAssigner implements CompanyRoleAssignerInterface
@@ -23,6 +25,11 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
     protected $companyRoleFacade;
 
     /**
+     * @var \FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacade
+     */
+    protected $companyTypeFacade;
+
+    /**
      * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface
      */
     protected $permissionFacade;
@@ -35,10 +42,12 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
     public function __construct(
         CompanyTypeRoleConfig $companyTypeRoleConfig,
         CompanyTypeRoleToCompanyRoleFacadeInterface $companyRoleFacade,
+        CompanyTypeFacade $companyTypeFacade,
         CompanyTypeRoleToPermissionFacadeInterface $permissionFacade
     ) {
         $this->companyTypeRoleConfig = $companyTypeRoleConfig;
         $this->companyRoleFacade = $companyRoleFacade;
+        $this->companyTypeFacade = $companyTypeFacade;
         $this->permissionFacade = $permissionFacade;
     }
 
@@ -91,6 +100,16 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
         }
 
         $companyTypeTransfer = $companyTransfer->getCompanyType();
+
+        if ($companyTypeTransfer !== null && $companyTypeTransfer->getName() !== null) {
+            return $this->companyTypeRoleConfig
+                ->getPredefinedCompanyRolesByCompanyTypeName($companyTypeTransfer->getName());
+        }
+
+        $companyTypeTransfer = (new CompanyTypeTransfer())
+            ->setIdCompanyType($companyTransfer->getFkCompanyType());
+
+        $companyTypeTransfer = $this->companyTypeFacade->getCompanyTypeById($companyTypeTransfer);
 
         if ($companyTypeTransfer === null || $companyTypeTransfer->getName() === null) {
             return [];

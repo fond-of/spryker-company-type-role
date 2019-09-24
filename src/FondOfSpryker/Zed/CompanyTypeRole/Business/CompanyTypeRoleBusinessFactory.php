@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
+use FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
@@ -22,6 +23,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
         return new CompanyRoleAssigner(
             $this->getConfig(),
             $this->getCompanyRoleFacade(),
+            $this->getCompanyTypeFacade(),
             $this->getPermissionFacade()
         );
     }
@@ -34,6 +36,16 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyRoleFacade(): CompanyTypeRoleToCompanyRoleFacadeInterface
     {
         return $this->getProvidedDependency(CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface
+     *
+     * @throws
+     */
+    protected function getCompanyTypeFacade(): CompanyTypeFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE);
     }
 
     /**

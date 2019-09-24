@@ -10,6 +10,7 @@ use Spryker\Zed\Kernel\Container;
 class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+    public const FACADE_COMPANY_TYPE = 'FACADE_COMPANY_TYPE';
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**
@@ -22,6 +23,7 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCompanyRoleFacade($container);
+        $container = $this->addCompanyTypeFacade($container);
         $container = $this->addPermissionFacade($container);
 
         return $container;
@@ -38,6 +40,20 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
             return new CompanyTypeRoleToCompanyRoleFacadeBridge(
                 $container->getLocator()->companyRole()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyTypeFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_TYPE] = function (Container $container) {
+            return $container->getLocator()->companyType()->facade();
         };
 
         return $container;

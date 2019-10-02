@@ -1,0 +1,33 @@
+<?php
+
+
+namespace FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade;
+
+use FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface;
+use Generated\Shared\Transfer\CompanyTypeTransfer;
+
+class CompanyTypeRoleToCompanyTypeFacadeBridge implements CompanyTypeRoleToCompanyTypeFacadeInterface
+{
+    /**
+     * @var \FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface
+     */
+    protected $companyTypeFacade;
+
+    /**
+     * @param \FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface $companyTypeFacade
+     */
+    public function __construct(CompanyTypeFacadeInterface $companyTypeFacade)
+    {
+        $this->companyTypeFacade = $companyTypeFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTypeTransfer|null
+     */
+    public function getCompanyTypeById(CompanyTypeTransfer $companyTypeTransfer): ?CompanyTypeTransfer
+    {
+        return $this->companyTypeFacade->getCompanyTypeById($companyTypeTransfer);
+    }
+}

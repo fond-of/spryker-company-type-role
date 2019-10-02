@@ -8,6 +8,7 @@ use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterfac
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Zed\Kernel\Container;
@@ -28,6 +29,11 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface
      */
     protected $companyRoleFacadeMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface
+     */
+    protected $companyTypeFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface
@@ -68,6 +74,10 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->companyTypeFacadeMock = $this->getMockBuilder(CompanyTypeRoleToCompanyTypeFacadeInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->permissionFacadeMock = $this->getMockBuilder(CompanyTypeRoleToPermissionFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -95,15 +105,21 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->method('has')
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
                 [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
-            )->willReturnOnConsecutiveCalls(true, true);
+            )->willReturnOnConsecutiveCalls(true, true, true);
 
         $this->containerMock->expects($this->atLeastOnce())
             ->method('get')
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
                 [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
-            )->willReturnOnConsecutiveCalls($this->companyRoleFacadeMock, $this->permissionFacadeMock);
+            )->willReturnOnConsecutiveCalls(
+                $this->companyRoleFacadeMock,
+                $this->companyTypeFacadeMock,
+                $this->permissionFacadeMock
+            );
 
         $companyRoleAssigner = $this->companyTypeRoleBusinessFactory->createCompanyRoleAssigner();
 

@@ -3,7 +3,9 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole;
 
 use Codeception\Test\Unit;
+use FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeBridge;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeBridge;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface;
@@ -32,6 +34,11 @@ class CompanyTypeRoleDependencyProviderTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface#
      */
     protected $companyRoleFacadeMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface
+     */
+    protected $companyTypeFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Permission\Business\PermissionFacadeInterface
@@ -66,6 +73,10 @@ class CompanyTypeRoleDependencyProviderTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->companyTypeFacadeMock = $this->getMockBuilder(CompanyTypeFacadeInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->permissionFacadeMock = $this->getMockBuilder(PermissionFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -82,15 +93,19 @@ class CompanyTypeRoleDependencyProviderTest extends Unit
             ->method('getLocator')
             ->willReturn($this->locatorMock);
 
-        $this->locatorMock->expects($this->exactly(2))
+        $this->locatorMock->expects($this->exactly(3))
             ->method('__call')
-            ->withConsecutive(['companyRole'], ['permission'])
+            ->withConsecutive(['companyRole'], ['companyType'], ['permission'])
             ->willReturn($this->bundleProxyMock);
 
-        $this->bundleProxyMock->expects($this->exactly(2))
+        $this->bundleProxyMock->expects($this->exactly(3))
             ->method('__call')
             ->with('facade')
-            ->willReturnOnConsecutiveCalls($this->companyRoleFacadeMock, $this->permissionFacadeMock);
+            ->willReturnOnConsecutiveCalls(
+                $this->companyRoleFacadeMock,
+                $this->companyTypeFacadeMock,
+                $this->permissionFacadeMock
+            );
 
         $this->assertEquals(
             $this->containerMock,
@@ -100,6 +115,11 @@ class CompanyTypeRoleDependencyProviderTest extends Unit
         $this->assertInstanceOf(
             CompanyTypeRoleToCompanyRoleFacadeBridge::class,
             $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE]
+        );
+
+        $this->assertInstanceOf(
+            CompanyTypeRoleToCompanyTypeFacadeBridge::class,
+            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE]
         );
 
         $this->assertInstanceOf(

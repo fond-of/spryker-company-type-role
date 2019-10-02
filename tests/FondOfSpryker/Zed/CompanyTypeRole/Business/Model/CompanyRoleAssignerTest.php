@@ -6,6 +6,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
@@ -31,6 +32,11 @@ class CompanyRoleAssignerTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface
      */
     protected $permissionFacadeMock;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface
+     */
+    protected $companyTypeFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CompanyResponseTransfer
@@ -97,6 +103,10 @@ class CompanyRoleAssignerTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->companyTypeFacadeMock = $this->getMockBuilder(CompanyTypeRoleToCompanyTypeFacadeInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->permissionFacadeMock = $this->getMockBuilder(CompanyTypeRoleToPermissionFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -153,6 +163,7 @@ class CompanyRoleAssignerTest extends Unit
         $this->companyRoleAssigner = new CompanyRoleAssigner(
             $this->configMock,
             $this->companyRoleFacadeMock,
+            $this->companyTypeFacadeMock,
             $this->permissionFacadeMock
         );
     }
@@ -205,6 +216,97 @@ class CompanyRoleAssignerTest extends Unit
 
         $this->companyTransferMock->expects($this->atLeastOnce())
             ->method('getCompanyType')
+            ->willReturn($this->companyTypeTransferMock);
+
+        $this->companyTypeTransferMock->expects($this->atLeastOnce())
+            ->method('getName')
+            ->willReturn($companyTypeName);
+
+        $this->configMock->expects($this->atLeastOnce())
+            ->method('getPredefinedCompanyRolesByCompanyTypeName')
+            ->willReturn($this->companyRoleTransferMocks);
+
+        $this->permissionFacadeMock->expects($this->atLeastOnce())
+            ->method('findMergedRegisteredNonInfrastructuralPermissions')
+            ->willReturn($this->availablePermissionCollectionMock);
+
+        $this->companyTransferMock->expects($this->atLeastOnce())
+            ->method('getIdCompany')
+            ->willReturn($idCompany);
+
+        $this->companyRoleTransferMocks[0]->expects($this->atLeastOnce())
+            ->method('setFkCompany')
+            ->with($idCompany)
+            ->willReturn($this->companyRoleTransferMocks[0]);
+
+        $this->companyRoleTransferMocks[0]->expects($this->atLeastOnce())
+            ->method('getPermissionCollection')
+            ->willReturn($this->companyRolePermissionCollectionMock);
+
+        $this->companyRolePermissionCollectionMock->expects($this->atLeastOnce())
+            ->method('getPermissions')
+            ->willReturn($this->companyRolePermissionMocks);
+
+        $this->availablePermissionCollectionMock->expects($this->atLeastOnce())
+            ->method('getPermissions')
+            ->willReturn($this->availablePermissionMocks);
+
+        $this->companyRolePermissionMocks[0]->expects($this->atLeastOnce())
+            ->method('getKey')
+            ->willReturn('PermissionKey1');
+
+        $this->companyRolePermissionMocks[1]->expects($this->atLeastOnce())
+            ->method('getKey')
+            ->willReturn('PermissionKey2');
+
+        $this->availablePermissionMocks[0]->expects($this->atLeastOnce())
+            ->method('getKey')
+            ->willReturn('PermissionKey2');
+
+        $this->companyRoleTransferMocks[0]->expects($this->atLeastOnce())
+            ->method('setPermissionCollection')
+            ->with($this->isInstanceOf(PermissionCollectionTransfer::class))
+            ->willReturn($this->companyRoleTransferMocks);
+
+        $this->companyRoleFacadeMock->expects($this->atLeastOnce())
+            ->method('create')
+            ->with($this->companyRoleTransferMocks[0])
+            ->willReturn($this->companyRoleResponseTransferMock);
+
+        $this->companyRoleResponseTransferMock->expects($this->atLeastOnce())
+            ->method('getMessages')
+            ->willReturn(new ArrayObject());
+
+        $companyResponseTransfer = $this->companyRoleAssigner
+            ->assignPredefinedCompanyRolesToNewCompany($this->companyResponseTransferMock);
+
+        $this->assertEquals($this->companyResponseTransferMock, $companyResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAssignPredefinedCompanyRolesToNewCompanyWithoutCompanyTransferProperty(): void
+    {
+        $companyTypeName = 'retailer';
+        $idCompany = 1;
+        $fkCompanyType = 7;
+
+        $this->companyResponseTransferMock->expects($this->atLeastOnce())
+            ->method('getCompanyTransfer')
+            ->willReturn($this->companyTransferMock);
+
+        $this->companyTransferMock->expects($this->atLeastOnce())
+            ->method('getCompanyType')
+            ->willReturn(null);
+
+        $this->companyTransferMock->expects($this->atLeastOnce())
+            ->method('getFkCompanyType')
+            ->willReturn($fkCompanyType);
+
+        $this->companyTypeFacadeMock->expects($this->atLeastOnce())
+            ->method('getCompanyTypeById')
+            ->with($this->isInstanceOf(CompanyTypeTransfer::class))
             ->willReturn($this->companyTypeTransferMock);
 
         $this->companyTypeTransferMock->expects($this->atLeastOnce())

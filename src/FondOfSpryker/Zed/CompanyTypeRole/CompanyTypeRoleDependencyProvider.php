@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole;
 
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeBridge;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -53,7 +54,9 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanyTypeFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_TYPE] = function (Container $container) {
-            return $container->getLocator()->companyType()->facade();
+            return new CompanyTypeRoleToCompanyTypeFacadeBridge(
+                $container->getLocator()->companyType()->facade()
+            );
         };
 
         return $container;

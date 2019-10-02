@@ -2,9 +2,9 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Model;
 
-use FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacade;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
@@ -25,7 +25,7 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
     protected $companyRoleFacade;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacade
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface
      */
     protected $companyTypeFacade;
 
@@ -37,12 +37,13 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
     /**
      * @param \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig $companyTypeRoleConfig
      * @param \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface $companyRoleFacade
+     * @param \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface $companyTypeFacade
      * @param \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface $permissionFacade
      */
     public function __construct(
         CompanyTypeRoleConfig $companyTypeRoleConfig,
         CompanyTypeRoleToCompanyRoleFacadeInterface $companyRoleFacade,
-        CompanyTypeFacade $companyTypeFacade,
+        CompanyTypeRoleToCompanyTypeFacadeInterface $companyTypeFacade,
         CompanyTypeRoleToPermissionFacadeInterface $permissionFacade
     ) {
         $this->companyTypeRoleConfig = $companyTypeRoleConfig;

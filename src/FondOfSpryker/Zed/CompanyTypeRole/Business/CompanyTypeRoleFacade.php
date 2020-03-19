@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,5 +25,21 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
     ): CompanyResponseTransfer {
         return $this->getFactory()->createCompanyRoleAssigner()
             ->assignPredefinedCompanyRolesToNewCompany($companyResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $transfer
+     *
+     * @return bool
+     */
+    public function validateCompanyTypeRoleForExport(EventEntityTransfer $transfer): bool
+    {
+        return $this->getFactory()
+            ->createCompanyTypeRoleExportValidator()
+            ->validate($transfer);
     }
 }

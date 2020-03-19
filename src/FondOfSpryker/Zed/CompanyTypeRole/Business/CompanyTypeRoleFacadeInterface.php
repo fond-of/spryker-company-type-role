@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 
 interface CompanyTypeRoleFacadeInterface
 {
@@ -20,4 +21,16 @@ interface CompanyTypeRoleFacadeInterface
     public function assignPredefinedCompanyRolesToNewCompany(
         CompanyResponseTransfer $companyResponseTransfer
     ): CompanyResponseTransfer;
+
+    /**
+     * Specification
+     * - Check if the Type of Data based on the Company Type Role can be exported
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $transfer
+     *
+     * @return bool
+     */
+    public function validateCompanyTypeRoleForExport(EventEntityTransfer $transfer): bool;
 }

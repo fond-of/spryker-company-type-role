@@ -7,7 +7,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 interface CompanyTypeRoleExportValidatorInterface
 {
     /**
-     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer $eventEntityTransfer
      *
      * @return bool

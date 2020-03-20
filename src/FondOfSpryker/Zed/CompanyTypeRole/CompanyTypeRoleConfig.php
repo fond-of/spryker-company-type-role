@@ -68,6 +68,10 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
             return $companyRoles;
         }
 
+        if (!isset($companyRoles[$companyType])) {
+            return [];
+        }
+
         return $companyRoles[$companyType];
     }
 

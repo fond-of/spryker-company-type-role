@@ -2,11 +2,14 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
+use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidator;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -26,6 +29,26 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyTypeFacade(),
             $this->getPermissionFacade()
         );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface
+     */
+    public function createCompanyTypeRoleExportValidator(): CompanyTypeRoleExportValidatorInterface
+    {
+        return new CompanyTypeRoleExportValidator(
+            $this->getCompanyUserFacade(),
+            $this->getCompanyTypeFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): CompanyTypeRoleToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyTypeRoleDependencyProvider::FACADE_COMPANY_USER);
     }
 
     /**

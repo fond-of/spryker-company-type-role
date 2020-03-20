@@ -21,9 +21,9 @@ class CompanyTypeRoleToCompanyUserFacadeBridge implements CompanyTypeRoleToCompa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findCompanyUserById(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
     {

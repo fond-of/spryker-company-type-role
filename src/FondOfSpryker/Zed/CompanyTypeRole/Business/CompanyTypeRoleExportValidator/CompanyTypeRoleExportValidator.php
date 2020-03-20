@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorInterface
 {
     protected const ENTITY_TRANSFER_FOREIGN_KEY_ID_COMPANY = 'spy_company_user.fk_company';
+    protected const ENTITY_TRANSFER_NAME_COMPANY_USER = 'spy_company_user';
 
     /**
      * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface
@@ -53,14 +54,14 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
      */
     public function validate(EventEntityTransfer $eventEntityTransfer): bool
     {
-        if ($eventEntityTransfer->getName() !== 'spy_company_user') {
+        if ($eventEntityTransfer->getName() !== self::ENTITY_TRANSFER_NAME_COMPANY_USER) {
             return true;
         }
 
         $companyTypeTransfer = $this->getCompanyTypeTransfer($eventEntityTransfer);
 
-        if ($companyTypeTransfer == null
-            || $companyTypeTransfer->getName() == $this->companyTypeFacade->getCompanyTypeManufacturerName()) {
+        if ($companyTypeTransfer === null
+            || $companyTypeTransfer->getName() === $this->companyTypeFacade->getCompanyTypeManufacturerName()) {
                 return false;
         }
 

@@ -31,7 +31,7 @@ class CompanyTypeRoleDependencyProviderTest extends Unit
     protected $bundleProxyMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface#
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface
      */
     protected $companyRoleFacadeMock;
 

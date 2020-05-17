@@ -52,8 +52,6 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface
      */
     protected function getCompanyRoleFacade(): CompanyTypeRoleToCompanyRoleFacadeInterface
@@ -62,8 +60,6 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface
      */
     protected function getCompanyTypeFacade(): CompanyTypeRoleToCompanyTypeFacadeInterface
@@ -72,8 +68,6 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface
      */
     protected function getPermissionFacade(): CompanyTypeRoleToPermissionFacadeInterface

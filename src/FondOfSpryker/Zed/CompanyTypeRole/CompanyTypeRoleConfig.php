@@ -90,7 +90,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
     /**
      * @param string $companyTypeName
      * @param string $companyTypeRoleName
-     * @param bool|string $isDefault
+     * @param bool $isDefault
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -28,7 +28,7 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

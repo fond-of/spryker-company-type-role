@@ -13,11 +13,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyTypeRoleEventEntityTransferExportValidatorPluginInterface extends AbstractPlugin implements EventEntityTransferExportValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer $transfer
+     *
      * @return bool
      */
     public function validate(EventEntityTransfer $transfer): bool

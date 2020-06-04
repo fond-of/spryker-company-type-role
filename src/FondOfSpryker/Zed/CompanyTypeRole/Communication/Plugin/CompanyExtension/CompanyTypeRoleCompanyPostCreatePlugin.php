@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyTypeRoleCompanyPostCreatePlugin extends AbstractPlugin implements CompanyPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade;
 
 use FondOfSpryker\Zed\CompanyType\Business\CompanyTypeFacadeInterface;

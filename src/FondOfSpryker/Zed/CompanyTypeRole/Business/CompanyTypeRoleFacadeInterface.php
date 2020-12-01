@@ -3,6 +3,8 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTypeTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 
 interface CompanyTypeRoleFacadeInterface
@@ -33,4 +35,20 @@ interface CompanyTypeRoleFacadeInterface
      * @return bool
      */
     public function validateCompanyTypeRoleForExport(EventEntityTransfer $transfer): bool;
+
+    /**
+     * Specification
+     * - Retrieve the permission keys for a company type and company role
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return array
+     */
+    public function getPermissionKeysByCompanyTypeAndCompanyRole(
+        CompanyTypeTransfer $companyTypeTransfer,
+        CompanyRoleTransfer $companyRoleTransfer
+    ): array;
 }

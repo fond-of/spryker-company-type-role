@@ -114,7 +114,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
      *
      * @return string[]
      */
-    protected function getPermissionKeys(string $companyTypeName, string $roleName): array
+    public function getPermissionKeys(string $companyTypeName, string $roleName): array
     {
         $permissionKeys = $this->get(CompanyTypeRoleConstants::PERMISSION_KEYS, []);
 

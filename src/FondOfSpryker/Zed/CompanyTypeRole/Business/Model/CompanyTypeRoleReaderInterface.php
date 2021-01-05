@@ -11,7 +11,7 @@ interface CompanyTypeRoleReaderInterface
      * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getCompanyTypeRolePermissionKeys(
         CompanyTypeTransfer $companyTypeTransfer,

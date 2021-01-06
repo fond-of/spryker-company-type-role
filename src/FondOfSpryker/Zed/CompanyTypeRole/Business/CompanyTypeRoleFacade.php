@@ -56,7 +56,7 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
         CompanyRoleTransfer $companyRoleTransfer
     ): array {
         return $this->getFactory()
-            ->createCompanyTypeRoleReader()
+            ->createPermissionReader()
             ->getCompanyTypeRolePermissionKeys($companyTypeTransfer, $companyRoleTransfer);
     }
 }

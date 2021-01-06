@@ -6,7 +6,7 @@ use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTypeTransfer;
 
-class CompanyTypeRoleReader implements CompanyTypeRoleReaderInterface
+class PermissionReader implements PermissionReaderInterface
 {
     /**
      * @var \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig

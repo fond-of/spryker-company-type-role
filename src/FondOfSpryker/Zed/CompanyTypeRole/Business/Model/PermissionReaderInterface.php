@@ -5,7 +5,7 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Model;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTypeTransfer;
 
-interface CompanyTypeRoleReaderInterface
+interface PermissionReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer

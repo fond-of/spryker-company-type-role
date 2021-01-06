@@ -60,8 +60,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
 
         $companyTypeTransfer = $this->getCompanyTypeTransfer($eventEntityTransfer);
 
-        if (
-            $companyTypeTransfer === null
+        if ($companyTypeTransfer === null
             || $companyTypeTransfer->getName() === $this->companyTypeFacade->getCompanyTypeManufacturerName()
         ) {
                 return false;
@@ -87,9 +86,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
         $foreignKeys = $eventEntityTransfer->getForeignKeys();
         $idCompany = null;
 
-        if (
-            array_key_exists(self::ENTITY_TRANSFER_FOREIGN_KEY_ID_COMPANY, $foreignKeys)
-        ) {
+        if (array_key_exists(self::ENTITY_TRANSFER_FOREIGN_KEY_ID_COMPANY, $foreignKeys)) {
             $idCompany = $foreignKeys[self::ENTITY_TRANSFER_FOREIGN_KEY_ID_COMPANY];
         }
 
@@ -115,8 +112,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
         $companyUsersCollection = new ArrayObject();
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
-            if (
-                !$this->checkRoleHasCompanyUser(
+            if (!$this->checkRoleHasCompanyUser(
                     $companyUserTransfer,
                     $companyRoleTransfer->getCompanyUserCollection()->getCompanyUsers()
                 )

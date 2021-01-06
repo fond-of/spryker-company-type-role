@@ -113,10 +113,9 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
             if (!$this->checkRoleHasCompanyUser(
-                    $companyUserTransfer,
-                    $companyRoleTransfer->getCompanyUserCollection()->getCompanyUsers()
-                )
-            ) {
+                $companyUserTransfer,
+                $companyRoleTransfer->getCompanyUserCollection()->getCompanyUsers()
+            )) {
                 continue;
             }
 

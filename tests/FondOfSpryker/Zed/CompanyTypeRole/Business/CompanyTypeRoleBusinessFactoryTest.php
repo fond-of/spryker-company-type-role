@@ -5,6 +5,7 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
@@ -124,5 +125,15 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
         $companyRoleAssigner = $this->companyTypeRoleBusinessFactory->createCompanyRoleAssigner();
 
         $this->assertInstanceOf(CompanyRoleAssigner::class, $companyRoleAssigner);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePermissionReader(): void
+    {
+        $permissionReader = $this->companyTypeRoleBusinessFactory->createPermissionReader();
+
+        $this->assertInstanceOf(PermissionReader::class, $permissionReader);
     }
 }

@@ -3,6 +3,8 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTypeTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -41,5 +43,20 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
         return $this->getFactory()
             ->createCompanyTypeRoleExportValidator()
             ->validate($transfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return string[]
+     */
+    public function getPermissionKeysByCompanyTypeAndCompanyRole(
+        CompanyTypeTransfer $companyTypeTransfer,
+        CompanyRoleTransfer $companyRoleTransfer
+    ): array {
+        return $this->getFactory()
+            ->createPermissionReader()
+            ->getCompanyTypeRolePermissionKeys($companyTypeTransfer, $companyRoleTransfer);
     }
 }

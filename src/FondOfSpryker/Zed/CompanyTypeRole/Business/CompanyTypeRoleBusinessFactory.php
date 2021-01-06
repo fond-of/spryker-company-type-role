@@ -6,6 +6,8 @@ use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\Co
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReaderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
@@ -29,6 +31,14 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyTypeFacade(),
             $this->getPermissionFacade()
         );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReaderInterface
+     */
+    public function createPermissionReader(): PermissionReaderInterface
+    {
+        return new PermissionReader($this->getConfig());
     }
 
     /**

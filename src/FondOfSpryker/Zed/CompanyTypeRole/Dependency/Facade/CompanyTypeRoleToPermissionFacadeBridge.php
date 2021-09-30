@@ -27,4 +27,12 @@ class CompanyTypeRoleToPermissionFacadeBridge implements CompanyTypeRoleToPermis
     {
         return $this->permissionFacade->findMergedRegisteredNonInfrastructuralPermissions();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findAll(): PermissionCollectionTransfer
+    {
+        return $this->permissionFacade->findAll();
+    }
 }

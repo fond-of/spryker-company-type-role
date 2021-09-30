@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 interface CompanyTypeRoleFacadeInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Create company roles by company type and config
      * - Assign created company roles to new company
      *
@@ -25,7 +25,7 @@ interface CompanyTypeRoleFacadeInterface
     ): CompanyResponseTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Check if the Type of Data based on the Company Type Role can be exported
      *
      * @api
@@ -37,7 +37,7 @@ interface CompanyTypeRoleFacadeInterface
     public function validateCompanyTypeRoleForExport(EventEntityTransfer $transfer): bool;
 
     /**
-     * Specification
+     * Specification:
      * - Retrieve the permission keys for a company type and company role
      *
      * @api
@@ -51,4 +51,15 @@ interface CompanyTypeRoleFacadeInterface
         CompanyTypeTransfer $companyTypeTransfer,
         CompanyRoleTransfer $companyRoleTransfer
     ): array;
+
+    /**
+     * Specification:
+     * - Sync company type role permissions
+     * - Use config as basis for company type role permission list
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncPermissions(): void;
 }

@@ -4,10 +4,16 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidator;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilter;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersection;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReaderInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizer;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
@@ -54,9 +60,39 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface
+     */
+    public function createPermissionSynchronizer(): PermissionSynchronizerInterface
+    {
+        return new PermissionSynchronizer(
+            $this->createCompanyTypeNameFilter(),
+            $this->createPermissionIntersection(),
+            $this->getCompanyRoleFacade(),
+            $this->getPermissionFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface
+     */
+    protected function createCompanyTypeNameFilter(): CompanyTypeNameFilterInterface
+    {
+        return new CompanyTypeNameFilter($this->getCompanyTypeFacade());
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface
+     */
+    protected function createPermissionIntersection(): PermissionIntersectionInterface
+    {
+        return new PermissionIntersection();
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface
      */
-    public function getCompanyUserFacade(): CompanyTypeRoleToCompanyUserFacadeInterface
+    protected function getCompanyUserFacade(): CompanyTypeRoleToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(CompanyTypeRoleDependencyProvider::FACADE_COMPANY_USER);
     }

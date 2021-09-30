@@ -6,6 +6,7 @@ use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizer;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
@@ -102,7 +103,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
      */
     public function testCreateCompanyRoleAssigner(): void
     {
-        $this->containerMock->expects($this->atLeastOnce())
+        $this->containerMock->expects(static::atLeastOnce())
             ->method('has')
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
@@ -110,7 +111,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
                 [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
             )->willReturnOnConsecutiveCalls(true, true, true);
 
-        $this->containerMock->expects($this->atLeastOnce())
+        $this->containerMock->expects(static::atLeastOnce())
             ->method('get')
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
@@ -124,7 +125,37 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
 
         $companyRoleAssigner = $this->companyTypeRoleBusinessFactory->createCompanyRoleAssigner();
 
-        $this->assertInstanceOf(CompanyRoleAssigner::class, $companyRoleAssigner);
+        static::assertInstanceOf(CompanyRoleAssigner::class, $companyRoleAssigner);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePermissionSynchronizer(): void
+    {
+        $this->containerMock->expects(static::atLeastOnce())
+            ->method('has')
+            ->withConsecutive(
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+            )->willReturnOnConsecutiveCalls(true, true, true);
+
+        $this->containerMock->expects(static::atLeastOnce())
+            ->method('get')
+            ->withConsecutive(
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+            )->willReturnOnConsecutiveCalls(
+                $this->companyTypeFacadeMock,
+                $this->companyRoleFacadeMock,
+                $this->permissionFacadeMock
+            );
+
+        $permissionSynchronizer = $this->companyTypeRoleBusinessFactory->createPermissionSynchronizer();
+
+        static::assertInstanceOf(PermissionSynchronizer::class, $permissionSynchronizer);
     }
 
     /**
@@ -134,6 +165,6 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
     {
         $permissionReader = $this->companyTypeRoleBusinessFactory->createPermissionReader();
 
-        $this->assertInstanceOf(PermissionReader::class, $permissionReader);
+        static::assertInstanceOf(PermissionReader::class, $permissionReader);
     }
 }

@@ -4,6 +4,7 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 
 class CompanyTypeRoleFacadeTest extends Unit
@@ -29,6 +30,11 @@ class CompanyTypeRoleFacadeTest extends Unit
     protected $companyRoleAssignerMock;
 
     /**
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $permissionSynchronizerMock;
+
+    /**
      * @return void
      */
     protected function _before(): void
@@ -47,6 +53,10 @@ class CompanyTypeRoleFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->permissionSynchronizerMock = $this->getMockBuilder(PermissionSynchronizerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->companyTypeRoleFacade = new CompanyTypeRoleFacade();
 
         $this->companyTypeRoleFacade->setFactory($this->companyTypeRoleBusinessFactoryMock);
@@ -57,11 +67,11 @@ class CompanyTypeRoleFacadeTest extends Unit
      */
     public function testAssignPredefinedCompanyRolesToNewCompany(): void
     {
-        $this->companyTypeRoleBusinessFactoryMock->expects($this->atLeastOnce())
+        $this->companyTypeRoleBusinessFactoryMock->expects(static::atLeastOnce())
             ->method('createCompanyRoleAssigner')
             ->willReturn($this->companyRoleAssignerMock);
 
-        $this->companyRoleAssignerMock->expects($this->atLeastOnce())
+        $this->companyRoleAssignerMock->expects(static::atLeastOnce())
             ->method('assignPredefinedCompanyRolesToNewCompany')
             ->with($this->companyResponseTransferMock)
             ->willReturn($this->companyResponseTransferMock);
@@ -69,6 +79,21 @@ class CompanyTypeRoleFacadeTest extends Unit
         $companyResponseTransfer = $this->companyTypeRoleFacade
             ->assignPredefinedCompanyRolesToNewCompany($this->companyResponseTransferMock);
 
-        $this->assertEquals($companyResponseTransfer, $this->companyResponseTransferMock);
+        static::assertEquals($companyResponseTransfer, $this->companyResponseTransferMock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSyncPermissions(): void
+    {
+        $this->companyTypeRoleBusinessFactoryMock->expects(static::atLeastOnce())
+            ->method('createPermissionSynchronizer')
+            ->willReturn($this->permissionSynchronizerMock);
+
+        $this->permissionSynchronizerMock->expects(static::atLeastOnce())
+            ->method('sync');
+
+        $this->companyTypeRoleFacade->syncPermissions();
     }
 }

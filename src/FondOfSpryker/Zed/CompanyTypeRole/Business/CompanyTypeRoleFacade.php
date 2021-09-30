@@ -46,6 +46,10 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
@@ -58,5 +62,17 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
         return $this->getFactory()
             ->createPermissionReader()
             ->getCompanyTypeRolePermissionKeys($companyTypeTransfer, $companyRoleTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncPermissions(): void
+    {
+        $this->getFactory()->createPermissionSynchronizer()->sync();
     }
 }

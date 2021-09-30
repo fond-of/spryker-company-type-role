@@ -48,13 +48,28 @@ class CompanyTypeRoleToPermissionFacadeBridgeTest extends Unit
      */
     public function testCreate(): void
     {
-        $this->permissionFacadeMock->expects($this->atLeastOnce())
+        $this->permissionFacadeMock->expects(static::atLeastOnce())
             ->method('findMergedRegisteredNonInfrastructuralPermissions')
             ->willReturn($this->permissionCollectionTransferMock);
 
         $permissionCollectionTransfer = $this->companyTypeRoleToPermissionFacadeBridge
             ->findMergedRegisteredNonInfrastructuralPermissions();
 
-        $this->assertEquals($this->permissionCollectionTransferMock, $permissionCollectionTransfer);
+        static::assertEquals($this->permissionCollectionTransferMock, $permissionCollectionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAll(): void
+    {
+        $this->permissionFacadeMock->expects(static::atLeastOnce())
+            ->method('findAll')
+            ->willReturn($this->permissionCollectionTransferMock);
+
+        $permissionCollectionTransfer = $this->companyTypeRoleToPermissionFacadeBridge
+            ->findAll();
+
+        static::assertEquals($this->permissionCollectionTransferMock, $permissionCollectionTransfer);
     }
 }

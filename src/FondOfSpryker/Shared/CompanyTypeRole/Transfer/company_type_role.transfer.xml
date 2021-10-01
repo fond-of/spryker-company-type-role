@@ -21,4 +21,9 @@
     <transfer name="Permission">
         <property name="key" type="string"/>
     </transfer>
+
+    <transfer name="AssignableCompanyRoleCriteriaFilter">
+        <property name="idCustomer" type="int"/>
+        <property name="idCompany" type="int"/>
+    </transfer>
 </transfers>

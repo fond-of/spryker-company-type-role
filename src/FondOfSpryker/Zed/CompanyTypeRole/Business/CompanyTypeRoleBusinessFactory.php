@@ -29,6 +29,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig getConfig()
+ * @method \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface getRepository()
  */
 class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
 {
@@ -106,7 +107,8 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     protected function createCompanyUserReader(): CompanyUserReaderInterface
     {
         return new CompanyUserReader(
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->getRepository()
         );
     }
 

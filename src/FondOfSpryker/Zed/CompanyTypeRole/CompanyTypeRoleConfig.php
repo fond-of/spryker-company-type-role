@@ -48,11 +48,9 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
             return $predefinedRoles;
         }
 
-        $predefinedRoles = array_merge($predefinedRoles, [
+        return array_merge($predefinedRoles, [
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_PURCHASE, false),
         ]);
-
-        return $predefinedRoles;
     }
 
     /**
@@ -68,11 +66,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
             return $companyRoles;
         }
 
-        if (!isset($companyRoles[$companyType])) {
-            return [];
-        }
-
-        return $companyRoles[$companyType];
+        return $companyRoles[$companyType] ?? [];
     }
 
     /**

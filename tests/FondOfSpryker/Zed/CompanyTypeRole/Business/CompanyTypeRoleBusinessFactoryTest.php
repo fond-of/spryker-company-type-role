@@ -14,6 +14,7 @@ use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompany
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepository;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Zed\Kernel\Container;
 
@@ -60,6 +61,11 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
     protected $configMock;
 
     /**
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepository|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $repositoryMock;
+
+    /**
      * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleBusinessFactory
      */
     protected $companyTypeRoleBusinessFactory;
@@ -103,10 +109,15 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->repositoryMock = $this->getMockBuilder(CompanyTypeRoleRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->companyTypeRoleBusinessFactory = new CompanyTypeRoleBusinessFactory();
 
         $this->companyTypeRoleBusinessFactory->setContainer($this->containerMock);
         $this->companyTypeRoleBusinessFactory->setConfig($this->configMock);
+        $this->companyTypeRoleBusinessFactory->setRepository($this->repositoryMock);
     }
 
     /**

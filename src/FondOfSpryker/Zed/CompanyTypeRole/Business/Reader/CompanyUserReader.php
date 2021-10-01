@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Reader;
 
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface;
 use Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
@@ -15,11 +16,20 @@ class CompanyUserReader implements CompanyUserReaderInterface
     protected $companyUserFacade;
 
     /**
-     * @param \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface $companyUserFacade
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface
      */
-    public function __construct(CompanyTypeRoleToCompanyUserFacadeInterface $companyUserFacade)
-    {
+    protected $repository;
+
+    /**
+     * @param \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface $companyUserFacade
+     * @param \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface $repository
+     */
+    public function __construct(
+        CompanyTypeRoleToCompanyUserFacadeInterface $companyUserFacade,
+        CompanyTypeRoleRepositoryInterface $repository
+    ) {
         $this->companyUserFacade = $companyUserFacade;
+        $this->repository = $repository;
     }
 
     /**
@@ -36,9 +46,16 @@ class CompanyUserReader implements CompanyUserReaderInterface
             return new CompanyUserCollectionTransfer();
         }
 
+        $activeCompanyUserIds = $this->repository->findActiveCompanyUserIdsByIdCustomer($idCustomer);
+
+        if (count($activeCompanyUserIds) === 0) {
+            return new CompanyUserCollectionTransfer();
+        }
+
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
             ->setIdCompany($assignableCompanyRoleCriteriaFilterTransfer->getIdCompany())
-            ->setIdCustomer($idCustomer);
+            ->setCompanyUserIds($activeCompanyUserIds)
+            ->setIsActive(true);
 
         return $this->companyUserFacade->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }

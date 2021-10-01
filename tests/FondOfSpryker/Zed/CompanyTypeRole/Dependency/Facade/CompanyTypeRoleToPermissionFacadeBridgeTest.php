@@ -72,4 +72,20 @@ class CompanyTypeRoleToPermissionFacadeBridgeTest extends Unit
 
         static::assertEquals($this->permissionCollectionTransferMock, $permissionCollectionTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testCan(): void
+    {
+        $permissionKey = 'foo';
+        $identifier = 'bar';
+
+        $this->permissionFacadeMock->expects(static::atLeastOnce())
+            ->method('can')
+            ->with($permissionKey, $identifier, null)
+            ->willReturn(true);
+
+        static::assertTrue($this->companyTypeRoleToPermissionFacadeBridge->can($permissionKey, $identifier));
+    }
 }

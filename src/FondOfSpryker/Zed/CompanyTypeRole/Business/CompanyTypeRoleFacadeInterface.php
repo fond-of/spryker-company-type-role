@@ -2,7 +2,9 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
+use Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTypeTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
@@ -62,4 +64,18 @@ interface CompanyTypeRoleFacadeInterface
      * @return void
      */
     public function syncPermissions(): void;
+
+    /**
+     * Specification:
+     * - Retrieve assignable company roles
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer $assignableCompanyRoleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getAssignableCompanyRoles(
+        AssignableCompanyRoleCriteriaFilterTransfer $assignableCompanyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer;
 }

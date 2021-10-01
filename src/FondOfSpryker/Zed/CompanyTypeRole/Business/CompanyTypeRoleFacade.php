@@ -2,7 +2,9 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
+use Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTypeTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
@@ -74,5 +76,22 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
     public function syncPermissions(): void
     {
         $this->getFactory()->createPermissionSynchronizer()->sync();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssignableCompanyRolesRequestTransfer $assignableCompanyRolesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getAssignableCompanyRoles(
+        AssignableCompanyRoleCriteriaFilterTransfer $assignableCompanyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->getFactory()->createAssignableCompanyRoleReader()->getByAssignableCompanyRoleCriteriaFilter(
+            $assignableCompanyRoleCriteriaFilterTransfer
+        );
     }
 }

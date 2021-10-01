@@ -6,12 +6,18 @@ use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\Co
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilter;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGenerator;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGeneratorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersection;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReaderInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReaderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizer;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
@@ -70,6 +76,37 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyRoleFacade(),
             $this->getPermissionFacade(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface
+     */
+    public function createAssignableCompanyRoleReader(): AssignableCompanyRoleReaderInterface
+    {
+        return new AssignableCompanyRoleReader(
+            $this->createAssignPermissionKeyGenerator(),
+            $this->createCompanyUserReader(),
+            $this->getCompanyRoleFacade(),
+            $this->getPermissionFacade()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGeneratorInterface
+     */
+    protected function createAssignPermissionKeyGenerator(): AssignPermissionKeyGeneratorInterface
+    {
+        return new AssignPermissionKeyGenerator();
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReaderInterface
+     */
+    protected function createCompanyUserReader(): CompanyUserReaderInterface
+    {
+        return new CompanyUserReader(
+            $this->getCompanyUserFacade()
         );
     }
 

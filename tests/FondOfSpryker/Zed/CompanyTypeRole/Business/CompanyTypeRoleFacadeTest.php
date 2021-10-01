@@ -4,8 +4,11 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface;
+use Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 
 class CompanyTypeRoleFacadeTest extends Unit
 {
@@ -35,6 +38,21 @@ class CompanyTypeRoleFacadeTest extends Unit
     protected $permissionSynchronizerMock;
 
     /**
+     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $assignableCompanyRoleCriteriaFilterTransferMock;
+
+    /**
+     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $companyRoleCollectionTransferMock;
+
+    /**
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $assignableCompanyRoleReaderMock;
+
+    /**
      * @return void
      */
     protected function _before(): void
@@ -54,6 +72,18 @@ class CompanyTypeRoleFacadeTest extends Unit
             ->getMock();
 
         $this->permissionSynchronizerMock = $this->getMockBuilder(PermissionSynchronizerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->assignableCompanyRoleCriteriaFilterTransferMock = $this->getMockBuilder(AssignableCompanyRoleCriteriaFilterTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->companyRoleCollectionTransferMock = $this->getMockBuilder(CompanyRoleCollectionTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->assignableCompanyRoleReaderMock = $this->getMockBuilder(AssignableCompanyRoleReaderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -95,5 +125,27 @@ class CompanyTypeRoleFacadeTest extends Unit
             ->method('sync');
 
         $this->companyTypeRoleFacade->syncPermissions();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAssignableCompanyRoles(): void
+    {
+        $this->companyTypeRoleBusinessFactoryMock->expects(static::atLeastOnce())
+            ->method('createAssignableCompanyRoleReader')
+            ->willReturn($this->assignableCompanyRoleReaderMock);
+
+        $this->assignableCompanyRoleReaderMock->expects(static::atLeastOnce())
+            ->method('getByAssignableCompanyRoleCriteriaFilter')
+            ->with($this->assignableCompanyRoleCriteriaFilterTransferMock)
+            ->willReturn($this->companyRoleCollectionTransferMock);
+
+        static::assertEquals(
+            $this->companyRoleCollectionTransferMock,
+            $this->companyTypeRoleFacade->getAssignableCompanyRoles(
+                $this->assignableCompanyRoleCriteriaFilterTransferMock
+            )
+        );
     }
 }

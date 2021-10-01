@@ -6,11 +6,13 @@ use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReader;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizer;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleDependencyProvider;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Zed\Kernel\Container;
@@ -31,6 +33,11 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface
      */
     protected $companyRoleFacadeMock;
+
+    /**
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $companyUserFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface
@@ -77,6 +84,10 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->getMock();
 
         $this->companyTypeFacadeMock = $this->getMockBuilder(CompanyTypeRoleToCompanyTypeFacadeInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->companyUserFacadeMock = $this->getMockBuilder(CompanyTypeRoleToCompanyUserFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -166,5 +177,36 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
         $permissionReader = $this->companyTypeRoleBusinessFactory->createPermissionReader();
 
         static::assertInstanceOf(PermissionReader::class, $permissionReader);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateAssignableCompanyRoleReader(): void
+    {
+        $this->containerMock->expects(static::atLeastOnce())
+            ->method('has')
+            ->withConsecutive(
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_USER],
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+            )->willReturnOnConsecutiveCalls(true, true, true);
+
+        $this->containerMock->expects(static::atLeastOnce())
+            ->method('get')
+            ->withConsecutive(
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_USER],
+                [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+            )->willReturnOnConsecutiveCalls(
+                $this->companyUserFacadeMock,
+                $this->companyRoleFacadeMock,
+                $this->permissionFacadeMock
+            );
+
+        static::assertInstanceOf(
+            AssignableCompanyRoleReader::class,
+            $this->companyTypeRoleBusinessFactory->createAssignableCompanyRoleReader()
+        );
     }
 }

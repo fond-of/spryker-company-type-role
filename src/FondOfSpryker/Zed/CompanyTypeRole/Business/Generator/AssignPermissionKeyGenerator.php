@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 class AssignPermissionKeyGenerator implements AssignPermissionKeyGeneratorInterface
 {
     public const KEY_PREFIX = 'Assign';
-    public const KEY_SUFFIX = 'Permission';
+    public const KEY_SUFFIX = 'RolePermission';
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer

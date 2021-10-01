@@ -6,7 +6,7 @@ use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompany
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeBridge;
-use Orm\Zed\Company\Persistence\Base\SpyCompanyQuery;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -119,7 +119,7 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanyUserQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_COMPANY_USER] = static function () {
-            return SpyCompanyQuery::create();
+            return SpyCompanyUserQuery::create();
         };
 
         return $container;

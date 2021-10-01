@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Reader;
 
-use FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGenerator;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGeneratorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
@@ -77,7 +76,7 @@ class AssignableCompanyRoleReader implements AssignableCompanyRoleReaderInterfac
             );
 
             foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
-                if (!$this->isAssignable($companyRoleTransfer, $idCompany)) {
+                if (!$this->isAssignable($companyRoleTransfer, $idCompanyUser)) {
                     continue;
                 }
 

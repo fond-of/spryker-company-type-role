@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleBusinessFactory getFactory()
+ * @method \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface getRepository()
  */
 class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFacadeInterface
 {
@@ -83,7 +84,7 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AssignableCompanyRolesRequestTransfer $assignableCompanyRolesRequestTransfer
+     * @param \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer $assignableCompanyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */

@@ -7,7 +7,7 @@ interface CompanyTypeRoleRepositoryInterface
     /**
      * @param int $idCustomer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveCompanyUserIdsByIdCustomer(int $idCustomer): array;
 }

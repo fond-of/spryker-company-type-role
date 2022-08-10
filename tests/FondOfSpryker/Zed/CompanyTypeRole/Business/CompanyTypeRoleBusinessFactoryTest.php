@@ -36,7 +36,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
     protected $companyRoleFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserFacadeMock;
 
@@ -61,7 +61,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
     protected $configMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepository|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepository|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $repositoryMock;
 
@@ -130,7 +130,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
-                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
             )->willReturnOnConsecutiveCalls(true, true, true);
 
         $this->containerMock->expects(static::atLeastOnce())
@@ -138,11 +138,11 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
-                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
             )->willReturnOnConsecutiveCalls(
                 $this->companyRoleFacadeMock,
                 $this->companyTypeFacadeMock,
-                $this->permissionFacadeMock
+                $this->permissionFacadeMock,
             );
 
         $companyRoleAssigner = $this->companyTypeRoleBusinessFactory->createCompanyRoleAssigner();
@@ -160,7 +160,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
-                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
             )->willReturnOnConsecutiveCalls(true, true, true);
 
         $this->containerMock->expects(static::atLeastOnce())
@@ -168,11 +168,11 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
-                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
             )->willReturnOnConsecutiveCalls(
                 $this->companyTypeFacadeMock,
                 $this->companyRoleFacadeMock,
-                $this->permissionFacadeMock
+                $this->permissionFacadeMock,
             );
 
         $permissionSynchronizer = $this->companyTypeRoleBusinessFactory->createPermissionSynchronizer();
@@ -200,7 +200,7 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_USER],
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
-                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
             )->willReturnOnConsecutiveCalls(true, true, true);
 
         $this->containerMock->expects(static::atLeastOnce())
@@ -208,16 +208,16 @@ class CompanyTypeRoleBusinessFactoryTest extends Unit
             ->withConsecutive(
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_USER],
                 [CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
-                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+                [CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
             )->willReturnOnConsecutiveCalls(
                 $this->companyUserFacadeMock,
                 $this->companyRoleFacadeMock,
-                $this->permissionFacadeMock
+                $this->permissionFacadeMock,
             );
 
         static::assertInstanceOf(
             AssignableCompanyRoleReader::class,
-            $this->companyTypeRoleBusinessFactory->createAssignableCompanyRoleReader()
+            $this->companyTypeRoleBusinessFactory->createAssignableCompanyRoleReader(),
         );
     }
 }

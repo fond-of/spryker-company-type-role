@@ -9,7 +9,7 @@ class PermissionIntersection implements PermissionIntersectionInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

@@ -69,7 +69,7 @@ class PermissionSynchronizer implements PermissionSynchronizerInterface
         }
 
         $companyRoleCollectionTransfer = $this->companyRoleFacade->getCompanyRoleCollection(
-            new CompanyRoleCriteriaFilterTransfer()
+            new CompanyRoleCriteriaFilterTransfer(),
         );
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
@@ -88,7 +88,7 @@ class PermissionSynchronizer implements PermissionSynchronizerInterface
 
             $intersectedPermissionCollectionTransfer = $this->permissionIntersection->intersect(
                 $permissionCollectionTransfer,
-                $permissionKeys
+                $permissionKeys,
             );
 
             $companyRoleTransfer->setPermissionCollection($intersectedPermissionCollectionTransfer);

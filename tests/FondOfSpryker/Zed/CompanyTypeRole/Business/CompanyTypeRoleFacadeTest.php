@@ -33,22 +33,22 @@ class CompanyTypeRoleFacadeTest extends Unit
     protected $companyRoleAssignerMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizerInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $permissionSynchronizerMock;
 
     /**
-     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $assignableCompanyRoleCriteriaFilterTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleCollectionTransferMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $assignableCompanyRoleReaderMock;
 
@@ -144,8 +144,8 @@ class CompanyTypeRoleFacadeTest extends Unit
         static::assertEquals(
             $this->companyRoleCollectionTransferMock,
             $this->companyTypeRoleFacade->getAssignableCompanyRoles(
-                $this->assignableCompanyRoleCriteriaFilterTransferMock
-            )
+                $this->assignableCompanyRoleCriteriaFilterTransferMock,
+            ),
         );
     }
 }

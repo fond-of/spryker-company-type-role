@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AssignCustomerServiceRolePermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'AssignCustomerServiceRolePermission';
 
     /**

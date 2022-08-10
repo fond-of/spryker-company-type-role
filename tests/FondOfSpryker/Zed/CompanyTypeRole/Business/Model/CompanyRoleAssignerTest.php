@@ -54,7 +54,7 @@ class CompanyRoleAssignerTest extends Unit
     protected $companyTypeTransferMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject[]|\Generated\Shared\Transfer\CompanyRoleTransfer[]
+     * @var array<\Generated\Shared\Transfer\CompanyRoleTransfer>|array<\PHPUnit\Framework\MockObject\MockObject>
      */
     protected $companyRoleTransferMocks;
 
@@ -138,7 +138,7 @@ class CompanyRoleAssignerTest extends Unit
                 $this->getMockBuilder(PermissionTransfer::class)
                     ->disableOriginalConstructor()
                     ->getMock(),
-            ]
+            ],
         );
 
         $this->companyRolePermissionCollectionMock = $this->getMockBuilder(PermissionCollectionTransfer::class)
@@ -153,7 +153,7 @@ class CompanyRoleAssignerTest extends Unit
                 $this->getMockBuilder(PermissionTransfer::class)
                     ->disableOriginalConstructor()
                     ->getMock(),
-            ]
+            ],
         );
 
         $this->companyRoleResponseTransferMock = $this->getMockBuilder(CompanyRoleResponseTransfer::class)
@@ -164,7 +164,7 @@ class CompanyRoleAssignerTest extends Unit
             $this->configMock,
             $this->companyRoleFacadeMock,
             $this->companyTypeFacadeMock,
-            $this->permissionFacadeMock
+            $this->permissionFacadeMock,
         );
     }
 

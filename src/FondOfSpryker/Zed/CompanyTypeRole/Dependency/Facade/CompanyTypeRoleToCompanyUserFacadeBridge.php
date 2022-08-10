@@ -32,7 +32,6 @@ class CompanyTypeRoleToCompanyUserFacadeBridge implements CompanyTypeRoleToCompa
         return $this->companyUserFacade->findCompanyUserById($companyUserTransfer->getIdCompanyUser());
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *

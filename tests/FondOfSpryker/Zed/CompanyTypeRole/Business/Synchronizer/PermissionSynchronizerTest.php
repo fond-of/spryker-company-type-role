@@ -17,52 +17,52 @@ use Generated\Shared\Transfer\PermissionTransfer;
 class PermissionSynchronizerTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyTypeNameFilterMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $permissionIntersectionMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $permissionFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $configMock;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $permissionCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionTransfer[]|\PHPUnit\Framework\MockObject\MockObject[]
+     * @var array<\PHPUnit\Framework\MockObject\MockObject>|array<\Generated\Shared\Transfer\PermissionTransfer>
      */
     protected $permissionTransferMocks;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleTransfer[]|\PHPUnit\Framework\MockObject\MockObject[]
+     * @var array<\PHPUnit\Framework\MockObject\MockObject>|array<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     protected $companyRoleTransferMocks;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $intersectedPermissionCollectionTransferMock;
 
@@ -133,7 +133,7 @@ class PermissionSynchronizerTest extends Unit
             $this->permissionIntersectionMock,
             $this->companyRoleFacadeMock,
             $this->permissionFacadeMock,
-            $this->configMock
+            $this->configMock,
         );
     }
 
@@ -179,18 +179,18 @@ class PermissionSynchronizerTest extends Unit
             ->withConsecutive(
                 [$this->companyRoleTransferMocks[0]],
                 [$this->companyRoleTransferMocks[1]],
-                [$this->companyRoleTransferMocks[2]]
+                [$this->companyRoleTransferMocks[2]],
             )->willReturnOnConsecutiveCalls(
                 $companyTypeNames[0],
                 $companyTypeNames[1],
-                null
+                null,
             );
 
         $this->configMock->expects(static::atLeastOnce())
             ->method('getPermissionKeys')
             ->withConsecutive(
                 [$companyTypeNames[0], $companyRoleNames[0]],
-                [$companyTypeNames[1], $companyRoleNames[1]]
+                [$companyTypeNames[1], $companyRoleNames[1]],
             )->willReturnOnConsecutiveCalls([], $permissionKeys);
 
         $this->permissionIntersectionMock->expects(static::atLeastOnce())

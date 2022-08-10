@@ -42,7 +42,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getCompanyRoleFacade(),
             $this->getCompanyTypeFacade(),
-            $this->getPermissionFacade()
+            $this->getPermissionFacade(),
         );
     }
 
@@ -62,7 +62,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
         return new CompanyTypeRoleExportValidator(
             $this->getCompanyUserFacade(),
             $this->getCompanyTypeFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -76,7 +76,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
             $this->createPermissionIntersection(),
             $this->getCompanyRoleFacade(),
             $this->getPermissionFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -89,7 +89,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
             $this->createAssignPermissionKeyGenerator(),
             $this->createCompanyUserReader(),
             $this->getCompanyRoleFacade(),
-            $this->getPermissionFacade()
+            $this->getPermissionFacade(),
         );
     }
 
@@ -108,7 +108,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserReader(
             $this->getCompanyUserFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

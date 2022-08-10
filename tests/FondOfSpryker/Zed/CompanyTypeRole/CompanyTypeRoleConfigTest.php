@@ -49,8 +49,7 @@ class CompanyTypeRoleConfigTest extends Unit
     {
         parent::_before();
 
-        $this->companyTypeRoleConfig = new class($this->validCompanyTypeNames, $this->predefinedPermissionKeys)
-            extends CompanyTypeRoleConfig {
+        $this->companyTypeRoleConfig = new class ($this->validCompanyTypeNames, $this->predefinedPermissionKeys) extends CompanyTypeRoleConfig {
             /**
              * @var array
              */
@@ -100,7 +99,7 @@ class CompanyTypeRoleConfigTest extends Unit
         $companyTypeName = 'y';
 
         $predefinedCompanyRoles = $this->companyTypeRoleConfig->getPredefinedCompanyRolesByCompanyTypeName(
-            $companyTypeName
+            $companyTypeName,
         );
 
         $this->assertEmpty($predefinedCompanyRoles);
@@ -114,7 +113,7 @@ class CompanyTypeRoleConfigTest extends Unit
         $companyTypeName = 'manufacturer';
 
         $predefinedCompanyRoles = $this->companyTypeRoleConfig->getPredefinedCompanyRolesByCompanyTypeName(
-            $companyTypeName
+            $companyTypeName,
         );
 
         $this->assertCount(count($this->predefinedPermissionKeys[$companyTypeName]), $predefinedCompanyRoles);
@@ -128,7 +127,7 @@ class CompanyTypeRoleConfigTest extends Unit
         $companyTypeName = 'retailer';
 
         $predefinedCompanyRoles = $this->companyTypeRoleConfig->getPredefinedCompanyRolesByCompanyTypeName(
-            $companyTypeName
+            $companyTypeName,
         );
 
         $this->assertCount(count($this->predefinedPermissionKeys[$companyTypeName]), $predefinedCompanyRoles);
@@ -142,7 +141,7 @@ class CompanyTypeRoleConfigTest extends Unit
         $companyTypeName = 'x';
 
         $predefinedCompanyRoles = $this->companyTypeRoleConfig->getPredefinedCompanyRolesByCompanyTypeName(
-            $companyTypeName
+            $companyTypeName,
         );
 
         $this->assertCount(count($this->predefinedPermissionKeys[$companyTypeName]), $predefinedCompanyRoles);

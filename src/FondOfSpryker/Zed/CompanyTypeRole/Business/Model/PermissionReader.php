@@ -16,9 +16,8 @@ class PermissionReader implements PermissionReaderInterface
     /**
      * @param \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig $config
      */
-    public function __construct(
-        CompanyTypeRoleConfig $config
-    ) {
+    public function __construct(CompanyTypeRoleConfig $config)
+    {
         $this->config = $config;
     }
 
@@ -26,7 +25,7 @@ class PermissionReader implements PermissionReaderInterface
      * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCompanyTypeRolePermissionKeys(
         CompanyTypeTransfer $companyTypeTransfer,
@@ -34,7 +33,7 @@ class PermissionReader implements PermissionReaderInterface
     ): array {
         return $this->config->getPermissionKeys(
             $companyTypeTransfer->getName(),
-            $companyRoleTransfer->getName()
+            $companyRoleTransfer->getName(),
         );
     }
 }

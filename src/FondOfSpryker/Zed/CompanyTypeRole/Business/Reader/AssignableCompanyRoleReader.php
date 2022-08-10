@@ -60,7 +60,7 @@ class AssignableCompanyRoleReader implements AssignableCompanyRoleReaderInterfac
     ): CompanyRoleCollectionTransfer {
         $assignableCompanyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
         $companyUserCollectionTransfer = $this->companyUserReader->getByAssignableCompanyRoleCriteriaFilter(
-            $assignableCompanyRoleCriteriaFilterTransfer
+            $assignableCompanyRoleCriteriaFilterTransfer,
         );
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUser) {
@@ -72,7 +72,7 @@ class AssignableCompanyRoleReader implements AssignableCompanyRoleReaderInterfac
             }
 
             $companyRoleCollectionTransfer = $this->companyRoleFacade->getCompanyRoleCollection(
-                (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($idCompany)
+                (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($idCompany),
             );
 
             foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {

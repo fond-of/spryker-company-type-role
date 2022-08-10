@@ -14,7 +14,14 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 
 class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ENTITY_TRANSFER_FOREIGN_KEY_ID_COMPANY = 'spy_company_user.fk_company';
+
+    /**
+     * @var string
+     */
     protected const ENTITY_TRANSFER_NAME_COMPANY_USER = 'spy_company_user';
 
     /**
@@ -60,7 +67,8 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
 
         $companyTypeTransfer = $this->getCompanyTypeTransfer($eventEntityTransfer);
 
-        if ($companyTypeTransfer === null
+        if (
+            $companyTypeTransfer === null
             || $companyTypeTransfer->getName() === $this->companyTypeFacade->getCompanyTypeManufacturerName()
         ) {
                 return false;
@@ -70,7 +78,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
         $companyUserTransfer = $this->companyUserFacade->findCompanyUserById($companyUserTransfer);
         $companyUserRolesCollection = $this->getCompanyUserRolesCollection(
             $companyUserTransfer,
-            $companyUserTransfer->getCompanyRoleCollection()
+            $companyUserTransfer->getCompanyRoleCollection(),
         );
 
         return $this->isCompanyUserRollesCollectionValid($companyTypeTransfer, $companyUserRolesCollection);
@@ -103,7 +111,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CompanyRoleTransfer[]
+     * @return \ArrayObject<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     protected function getCompanyUserRolesCollection(
         CompanyUserTransfer $companyUserTransfer,
@@ -112,10 +120,12 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
         $companyUsersCollection = new ArrayObject();
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
-            if (!$this->checkRoleHasCompanyUser(
-                $companyUserTransfer,
-                $companyRoleTransfer->getCompanyUserCollection()->getCompanyUsers()
-            )) {
+            if (
+                !$this->checkRoleHasCompanyUser(
+                    $companyUserTransfer,
+                    $companyRoleTransfer->getCompanyUserCollection()->getCompanyUsers(),
+                )
+            ) {
                 continue;
             }
 
@@ -127,7 +137,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[]|\ArrayObject $companyUsers
+     * @param \ArrayObject<\Generated\Shared\Transfer\CompanyUserTransfer> $companyUsers
      *
      * @return bool
      */
@@ -146,7 +156,7 @@ class CompanyTypeRoleExportValidator implements CompanyTypeRoleExportValidatorIn
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer[]|\ArrayObject $companyRolleCollection
+     * @param \ArrayObject<\Generated\Shared\Transfer\CompanyRoleTransfer> $companyRolleCollection
      *
      * @return bool
      */

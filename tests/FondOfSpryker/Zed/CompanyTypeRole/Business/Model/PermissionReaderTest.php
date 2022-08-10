@@ -58,7 +58,7 @@ class PermissionReaderTest extends Unit
     {
         $this->configMock->expects($this->atLeastOnce())
             ->method('getPermissionKeys')
-            ->with('type','role')
+            ->with('type', 'role')
             ->willReturn(['permissioKey1, permissionKey2']);
 
         $this->companyTypeTransferMock->expects($this->atLeastOnce())

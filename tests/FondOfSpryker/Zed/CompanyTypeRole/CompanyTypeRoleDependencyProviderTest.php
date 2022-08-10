@@ -104,27 +104,27 @@ class CompanyTypeRoleDependencyProviderTest extends Unit
             ->willReturnOnConsecutiveCalls(
                 $this->companyRoleFacadeMock,
                 $this->companyTypeFacadeMock,
-                $this->permissionFacadeMock
+                $this->permissionFacadeMock,
             );
 
         $this->assertEquals(
             $this->containerMock,
-            $this->companyTypeRoleDependencyProvider->provideBusinessLayerDependencies($this->containerMock)
+            $this->companyTypeRoleDependencyProvider->provideBusinessLayerDependencies($this->containerMock),
         );
 
         $this->assertInstanceOf(
             CompanyTypeRoleToCompanyRoleFacadeBridge::class,
-            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE]
+            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_COMPANY_ROLE],
         );
 
         $this->assertInstanceOf(
             CompanyTypeRoleToCompanyTypeFacadeBridge::class,
-            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE]
+            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_COMPANY_TYPE],
         );
 
         $this->assertInstanceOf(
             CompanyTypeRoleToPermissionFacadeBridge::class,
-            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_PERMISSION]
+            $this->containerMock[CompanyTypeRoleDependencyProvider::FACADE_PERMISSION],
         );
     }
 }

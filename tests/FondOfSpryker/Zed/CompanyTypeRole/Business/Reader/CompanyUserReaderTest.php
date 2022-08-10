@@ -12,22 +12,22 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 class CompanyUserReaderTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Persistence\CompanyTypeRoleRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $repositoryMock;
 
     /**
-     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $assignableCompanyRoleCriteriaFilterTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserCollectionTransferMock;
 
@@ -61,7 +61,7 @@ class CompanyUserReaderTest extends Unit
 
         $this->companyUserReader = new CompanyUserReader(
             $this->companyUserFacadeMock,
-            $this->repositoryMock
+            $this->repositoryMock,
         );
     }
 
@@ -94,15 +94,15 @@ class CompanyUserReaderTest extends Unit
                         return $companyUserCriteriaFilterTransfer->getCompanyUserIds() === $companyUserIds
                             && $companyUserCriteriaFilterTransfer->getIdCompany() === null
                             && $companyUserCriteriaFilterTransfer->getIsActive() === true;
-                    }
-                )
+                    },
+                ),
             )->willReturn($this->companyUserCollectionTransferMock);
 
         static::assertEquals(
             $this->companyUserCollectionTransferMock,
             $this->companyUserReader->getByAssignableCompanyRoleCriteriaFilter(
-                $this->assignableCompanyRoleCriteriaFilterTransferMock
-            )
+                $this->assignableCompanyRoleCriteriaFilterTransferMock,
+            ),
         );
     }
 
@@ -133,8 +133,8 @@ class CompanyUserReaderTest extends Unit
         static::assertCount(
             0,
             $this->companyUserReader->getByAssignableCompanyRoleCriteriaFilter(
-                $this->assignableCompanyRoleCriteriaFilterTransferMock
-            )->getCompanyUsers()
+                $this->assignableCompanyRoleCriteriaFilterTransferMock,
+            )->getCompanyUsers(),
         );
     }
 
@@ -159,8 +159,8 @@ class CompanyUserReaderTest extends Unit
         static::assertCount(
             0,
             $this->companyUserReader->getByAssignableCompanyRoleCriteriaFilter(
-                $this->assignableCompanyRoleCriteriaFilterTransferMock
-            )->getCompanyUsers()
+                $this->assignableCompanyRoleCriteriaFilterTransferMock,
+            )->getCompanyUsers(),
         );
     }
 }

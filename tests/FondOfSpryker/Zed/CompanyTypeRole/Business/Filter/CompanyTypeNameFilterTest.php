@@ -11,22 +11,22 @@ use Generated\Shared\Transfer\CompanyTypeTransfer;
 class CompanyTypeNameFilterTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyTypeFacadeMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyTypeTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyTypeTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyTypeTransferMock;
 
@@ -83,8 +83,8 @@ class CompanyTypeNameFilterTest extends Unit
                 static::callback(
                     static function (CompanyTypeTransfer $companyTypeTransfer) use ($fkCompanyType) {
                         return $companyTypeTransfer->getIdCompanyType() === $fkCompanyType;
-                    }
-                )
+                    },
+                ),
             )->willReturn($this->companyTypeTransferMock);
 
         $this->companyTypeTransferMock->expects(static::atLeastOnce())
@@ -93,7 +93,7 @@ class CompanyTypeNameFilterTest extends Unit
 
         static::assertEquals(
             $companyTypeName,
-            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock)
+            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock),
         );
     }
 
@@ -117,7 +117,7 @@ class CompanyTypeNameFilterTest extends Unit
 
         static::assertEquals(
             null,
-            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock)
+            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock),
         );
     }
 
@@ -142,8 +142,8 @@ class CompanyTypeNameFilterTest extends Unit
                 static::callback(
                     static function (CompanyTypeTransfer $companyTypeTransfer) use ($fkCompanyType) {
                         return $companyTypeTransfer->getIdCompanyType() === $fkCompanyType;
-                    }
-                )
+                    },
+                ),
             )->willReturn(null);
 
         $this->companyTypeTransferMock->expects(static::never())
@@ -151,7 +151,7 @@ class CompanyTypeNameFilterTest extends Unit
 
         static::assertEquals(
             null,
-            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock)
+            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock),
         );
     }
 
@@ -176,8 +176,8 @@ class CompanyTypeNameFilterTest extends Unit
                 static::callback(
                     static function (CompanyTypeTransfer $companyTypeTransfer) use ($fkCompanyType) {
                         return $companyTypeTransfer->getIdCompanyType() === $fkCompanyType;
-                    }
-                )
+                    },
+                ),
             )->willReturn($this->companyTypeTransferMock);
 
         $this->companyTypeTransferMock->expects(static::atLeastOnce())
@@ -186,7 +186,7 @@ class CompanyTypeNameFilterTest extends Unit
 
         static::assertEquals(
             null,
-            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock)
+            $this->companyTypeNameFilter->filterFromCompanyRole($this->companyRoleTransferMock),
         );
     }
 }

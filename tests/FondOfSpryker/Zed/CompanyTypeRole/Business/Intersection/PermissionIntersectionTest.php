@@ -10,12 +10,12 @@ use Generated\Shared\Transfer\PermissionTransfer;
 class PermissionIntersectionTest extends Unit
 {
     /**
-     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $permissionCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionTransfer[]|\PHPUnit\Framework\MockObject\MockObject[]
+     * @var array<\PHPUnit\Framework\MockObject\MockObject>|array<\Generated\Shared\Transfer\PermissionTransfer>
      */
     protected $permissionTransferMocks;
 
@@ -68,7 +68,7 @@ class PermissionIntersectionTest extends Unit
 
         $permissionCollectionTransfer = $this->permissionIntersection->intersect(
             $this->permissionCollectionTransferMock,
-            $keys
+            $keys,
         );
 
         static::assertCount(1, $permissionCollectionTransfer->getPermissions());

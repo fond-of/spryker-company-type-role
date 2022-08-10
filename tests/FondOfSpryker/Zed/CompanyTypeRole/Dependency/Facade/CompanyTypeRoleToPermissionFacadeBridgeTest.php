@@ -39,7 +39,7 @@ class CompanyTypeRoleToPermissionFacadeBridgeTest extends Unit
             ->getMock();
 
         $this->companyTypeRoleToPermissionFacadeBridge = new CompanyTypeRoleToPermissionFacadeBridge(
-            $this->permissionFacadeMock
+            $this->permissionFacadeMock,
         );
     }
 

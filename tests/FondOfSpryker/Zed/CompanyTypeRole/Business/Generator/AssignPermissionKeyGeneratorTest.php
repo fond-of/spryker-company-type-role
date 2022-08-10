@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 class AssignPermissionKeyGeneratorTest extends Unit
 {
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleTransferMock;
 
@@ -47,9 +47,9 @@ class AssignPermissionKeyGeneratorTest extends Unit
                 '%s%s%s',
                 AssignPermissionKeyGenerator::KEY_PREFIX,
                 'FooBar',
-                AssignPermissionKeyGenerator::KEY_SUFFIX
+                AssignPermissionKeyGenerator::KEY_SUFFIX,
             ),
-            $this->assignPermissionKeyGenerator->generateByCompanyRole($this->companyRoleTransferMock)
+            $this->assignPermissionKeyGenerator->generateByCompanyRole($this->companyRoleTransferMock),
         );
     }
 
@@ -64,7 +64,7 @@ class AssignPermissionKeyGeneratorTest extends Unit
 
         static::assertEquals(
             null,
-            $this->assignPermissionKeyGenerator->generateByCompanyRole($this->companyRoleTransferMock)
+            $this->assignPermissionKeyGenerator->generateByCompanyRole($this->companyRoleTransferMock),
         );
     }
 }

@@ -11,22 +11,22 @@ use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 class CompanyTypeRoleToCompanyUserFacadeBridgeTest extends Unit
 {
     /**
-     * @var mixed|\PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface|mixed
      */
     protected $companyUserFacadeMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserCriteriaFilterTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyUserTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserTransferMock;
 
@@ -59,7 +59,7 @@ class CompanyTypeRoleToCompanyUserFacadeBridgeTest extends Unit
             ->getMock();
 
         $this->companyTypeRoleToCompanyUserFacadeBridge = new CompanyTypeRoleToCompanyUserFacadeBridge(
-            $this->companyUserFacadeMock
+            $this->companyUserFacadeMock,
         );
     }
 
@@ -76,8 +76,8 @@ class CompanyTypeRoleToCompanyUserFacadeBridgeTest extends Unit
         static::assertEquals(
             $this->companyUserCollectionTransferMock,
             $this->companyTypeRoleToCompanyUserFacadeBridge->getCompanyUserCollection(
-                $this->companyUserCriteriaFilterTransferMock
-            )
+                $this->companyUserCriteriaFilterTransferMock,
+            ),
         );
     }
 
@@ -100,8 +100,8 @@ class CompanyTypeRoleToCompanyUserFacadeBridgeTest extends Unit
         static::assertEquals(
             $this->companyUserTransferMock,
             $this->companyTypeRoleToCompanyUserFacadeBridge->findCompanyUserById(
-                $this->companyUserTransferMock
-            )
+                $this->companyUserTransferMock,
+            ),
         );
     }
 }

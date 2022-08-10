@@ -17,47 +17,47 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class AssignableCompanyRoleReaderTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGeneratorInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGeneratorInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $assignPermissionKeyGeneratorMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReaderInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReaderInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserReaderMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $permissionFacadeMock;
 
     /**
-     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $assignableCompanyRoleCriteriaFilterTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyUserCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyUserTransfer[]|\PHPUnit\Framework\MockObject\MockObject[]
+     * @var array<\PHPUnit\Framework\MockObject\MockObject>|array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     protected $companyUserTransferMocks;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleTransfer[]|\PHPUnit\Framework\MockObject\MockObject[]
+     * @var array<\PHPUnit\Framework\MockObject\MockObject>|array<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     protected $companyRoleTransferMocks;
 
@@ -123,7 +123,7 @@ class AssignableCompanyRoleReaderTest extends Unit
             $this->assignPermissionKeyGeneratorMock,
             $this->companyUserReaderMock,
             $this->companyRoleFacadeMock,
-            $this->permissionFacadeMock
+            $this->permissionFacadeMock,
         );
     }
 
@@ -167,8 +167,8 @@ class AssignableCompanyRoleReaderTest extends Unit
                 static::callback(
                     static function (CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer) use ($idCompany) {
                         return $companyRoleCriteriaFilterTransfer->getIdCompany() === $idCompany;
-                    }
-                )
+                    },
+                ),
             )->willReturn($this->companyRoleCollectionTransferMock);
 
         $this->companyRoleCollectionTransferMock->expects(static::atLeastOnce())
@@ -186,17 +186,17 @@ class AssignableCompanyRoleReaderTest extends Unit
             ->willReturn(true);
 
         $companyRoleCollectionTransfer = $this->assignableCompanyRoleReader->getByAssignableCompanyRoleCriteriaFilter(
-            $this->assignableCompanyRoleCriteriaFilterTransferMock
+            $this->assignableCompanyRoleCriteriaFilterTransferMock,
         );
 
         static::assertCount(
             1,
-            $companyRoleCollectionTransfer->getRoles()
+            $companyRoleCollectionTransfer->getRoles(),
         );
 
         static::assertEquals(
             $this->companyRoleTransferMocks[0],
-            $companyRoleCollectionTransfer->getRoles()->offsetGet(0)
+            $companyRoleCollectionTransfer->getRoles()->offsetGet(0),
         );
     }
 }

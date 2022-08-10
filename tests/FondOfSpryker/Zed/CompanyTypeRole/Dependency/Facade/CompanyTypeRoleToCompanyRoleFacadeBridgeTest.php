@@ -27,12 +27,12 @@ class CompanyTypeRoleToCompanyRoleFacadeBridgeTest extends Unit
     protected $companyRoleResponseTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleCollectionTransferMock;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer|mixed|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
      */
     protected $companyRoleCriteriaFilterTransferMock;
 
@@ -69,7 +69,7 @@ class CompanyTypeRoleToCompanyRoleFacadeBridgeTest extends Unit
             ->getMock();
 
         $this->companyTypeRoleToCompanyRoleFacadeBridge = new CompanyTypeRoleToCompanyRoleFacadeBridge(
-            $this->companyRoleFacadeMock
+            $this->companyRoleFacadeMock,
         );
     }
 

@@ -61,7 +61,7 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
         CompanyResponseTransfer $companyResponseTransfer
     ): CompanyResponseTransfer {
         $predefinedCompanyRoles = $this->getPredefinedCompanyRolesByCompanyResponseTransfer(
-            $companyResponseTransfer
+            $companyResponseTransfer,
         );
 
         if (count($predefinedCompanyRoles) === 0) {
@@ -74,12 +74,12 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
             $companyRoleResponseTransfer = $this->createInitialCompanyRoleWithAssignedPermissions(
                 $predefinedCompanyRole,
                 $companyResponseTransfer,
-                $availablePermissions
+                $availablePermissions,
             );
 
             $companyResponseTransfer = $this->addCompanyRoleMessagesToCompanyResponseTransfer(
                 $companyRoleResponseTransfer,
-                $companyResponseTransfer
+                $companyResponseTransfer,
             );
         }
 
@@ -89,7 +89,7 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     protected function getPredefinedCompanyRolesByCompanyResponseTransfer(
         CompanyResponseTransfer $companyResponseTransfer
@@ -157,7 +157,7 @@ class CompanyRoleAssigner implements CompanyRoleAssignerInterface
 
         $preparedPermissionCollection = $this->findAssignedCompanyRolePermissions(
             $companyRoleTransfer->getPermissionCollection(),
-            $availablePermissions
+            $availablePermissions,
         );
 
         $companyRoleTransfer->setPermissionCollection($preparedPermissionCollection);

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AssignAdministrationRolePermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'AssignAdministrationRolePermission';
 
     /**

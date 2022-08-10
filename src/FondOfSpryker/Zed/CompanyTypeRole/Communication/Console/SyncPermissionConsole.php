@@ -11,8 +11,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SyncPermissionConsole extends Console
 {
-    private const COMMAND_NAME = 'company-type-role:permission:sync';
-    private const DESCRIPTION = 'Sync permission for company type roles.';
+    /**
+     * @var string
+     */
+    protected const COMMAND_NAME = 'company-type-role:permission:sync';
+
+    /**
+     * @var string
+     */
+    protected const DESCRIPTION = 'Sync permission for company type roles.';
 
     /**
      * @return void

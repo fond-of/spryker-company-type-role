@@ -12,11 +12,11 @@ install-dev:
 
 .PHONY: phpcs
 phpcs:
-	./vendor/bin/phpcs --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./src/FondOfSpryker/
+	./vendor/bin/phpcs --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./src/FondOfSpryker/ ./tests/FondOfSpryker/
 
 .PHONY: phpcbf
 phpcbf:
-	./vendor/bin/phpcbf --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./src/FondOfSpryker/
+	./vendor/bin/phpcbf --standard=./vendor/spryker/code-sniffer/Spryker/ruleset.xml ./src/FondOfSpryker/ ./tests/FondOfSpryker/
 
 .PHONY: phpstan
 phpstan:
@@ -26,5 +26,5 @@ phpstan:
 codeception:
 	./vendor/bin/codecept run --env standalone --coverage --coverage-xml --coverage-html
 
-.PHONY: test
-test: install-dev phpcs phpstan codeception
+.PHONY: ci
+ci: install-dev phpcs codeception phpstan

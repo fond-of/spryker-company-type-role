@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AssignDistributionRolePermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'AssignDistributionRolePermission';
 
     /**

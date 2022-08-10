@@ -35,7 +35,7 @@ class CompanyTypeNameFilter implements CompanyTypeNameFilterInterface
         }
 
         $companyTypeTransfer = $this->companyTypeFacade->getCompanyTypeById(
-            (new CompanyTypeTransfer())->setIdCompanyType($companyTransfer->getFkCompanyType())
+            (new CompanyTypeTransfer())->setIdCompanyType($companyTransfer->getFkCompanyType()),
         );
 
         if ($companyTypeTransfer === null) {

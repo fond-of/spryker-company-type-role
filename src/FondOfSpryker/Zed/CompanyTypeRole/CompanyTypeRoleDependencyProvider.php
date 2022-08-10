@@ -12,11 +12,29 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_TYPE = 'FACADE_COMPANY_TYPE';
+
+    /**
+     * @var string
+     */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
 
     /**
@@ -44,7 +62,7 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY_ROLE] = static function (Container $container) {
             return new CompanyTypeRoleToCompanyRoleFacadeBridge(
-                $container->getLocator()->companyRole()->facade()
+                $container->getLocator()->companyRole()->facade(),
             );
         };
 
@@ -60,7 +78,7 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_PERMISSION] = static function (Container $container) {
             return new CompanyTypeRoleToPermissionFacadeBridge(
-                $container->getLocator()->permission()->facade()
+                $container->getLocator()->permission()->facade(),
             );
         };
 
@@ -76,7 +94,7 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY_TYPE] = static function (Container $container) {
             return new CompanyTypeRoleToCompanyTypeFacadeBridge(
-                $container->getLocator()->companyType()->facade()
+                $container->getLocator()->companyType()->facade(),
             );
         };
 
@@ -92,7 +110,7 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_COMPANY_USER] = static function (Container $container) {
             return new CompanyTypeRoleToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         };
 

@@ -56,7 +56,7 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
      * @param \Generated\Shared\Transfer\CompanyTypeTransfer $companyTypeTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPermissionKeysByCompanyTypeAndCompanyRole(
         CompanyTypeTransfer $companyTypeTransfer,
@@ -92,7 +92,7 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
         AssignableCompanyRoleCriteriaFilterTransfer $assignableCompanyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
         return $this->getFactory()->createAssignableCompanyRoleReader()->getByAssignableCompanyRoleCriteriaFilter(
-            $assignableCompanyRoleCriteriaFilterTransfer
+            $assignableCompanyRoleCriteriaFilterTransfer,
         );
     }
 }

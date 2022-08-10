@@ -10,18 +10,40 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyTypeRoleConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ROLE_NAME_SUPER_ADMINISTRATION = 'super_administration';
+
+    /**
+     * @var string
+     */
     public const ROLE_NAME_CUSTOMER_SERVICE = 'customer_service';
+
+    /**
+     * @var string
+     */
     public const ROLE_NAME_DISTRIBUTION = 'distribution';
 
+    /**
+     * @var string
+     */
     public const ROLE_NAME_ADMINISTRATION = 'administration';
+
+    /**
+     * @var string
+     */
     public const ROLE_NAME_MARKETING = 'marketing';
+
+    /**
+     * @var string
+     */
     public const ROLE_NAME_PURCHASE = 'purchase';
 
     /**
      * @param string $companyTypeName
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     public function getPredefinedCompanyRolesByCompanyTypeName(string $companyTypeName): array
     {
@@ -56,7 +78,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
     /**
      * @param string $companyType
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getValidCompanyRolesForExport(string $companyType = ''): array
     {
@@ -106,7 +128,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
      * @param string $companyTypeName
      * @param string $roleName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPermissionKeys(string $companyTypeName, string $roleName): array
     {
@@ -124,7 +146,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string[] $permissionKeys
+     * @param array<string> $permissionKeys
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

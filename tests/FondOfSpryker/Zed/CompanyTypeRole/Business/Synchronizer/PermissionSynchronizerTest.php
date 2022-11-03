@@ -4,45 +4,53 @@ namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 
 class PermissionSynchronizerTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $companyTypeNameFilterMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $permissionIntersectionMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilderInterface&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $companyRoleCriteriaFilterBuilderMock;
+
+    /**
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $companyRoleFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToPermissionFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $permissionFacadeMock;
 
     /**
-     * @var \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $configMock;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $permissionCollectionTransferMock;
 
@@ -52,9 +60,9 @@ class PermissionSynchronizerTest extends Unit
     protected $permissionTransferMocks;
 
     /**
-     * @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var array<\Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject>
      */
-    protected $companyRoleCollectionTransferMock;
+    protected $companyRoleCollectionTransferMocks;
 
     /**
      * @var array<\PHPUnit\Framework\MockObject\MockObject>|array<\Generated\Shared\Transfer\CompanyRoleTransfer>
@@ -62,9 +70,19 @@ class PermissionSynchronizerTest extends Unit
     protected $companyRoleTransferMocks;
 
     /**
-     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject|mixed
+     * @var \Generated\Shared\Transfer\PermissionCollectionTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $intersectedPermissionCollectionTransferMock;
+
+    /**
+     * @var array<\Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer|\PHPUnit\Framework\MockObject\MockObject>
+     */
+    protected $companyRoleCriteriaFilterTransferMocks;
+
+    /**
+     * @var \Generated\Shared\Transfer\PaginationTransfer&\PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $paginationTransferMock;
 
     /**
      * @var \FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizer
@@ -83,6 +101,10 @@ class PermissionSynchronizerTest extends Unit
             ->getMock();
 
         $this->permissionIntersectionMock = $this->getMockBuilder(PermissionIntersectionInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->companyRoleCriteriaFilterBuilderMock = $this->getMockBuilder(CompanyRoleCriteriaFilterBuilderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -108,9 +130,14 @@ class PermissionSynchronizerTest extends Unit
                 ->getMock(),
         ];
 
-        $this->companyRoleCollectionTransferMock = $this->getMockBuilder(CompanyRoleCollectionTransfer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->companyRoleCollectionTransferMocks = [
+            $this->getMockBuilder(CompanyRoleCollectionTransfer::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+            $this->getMockBuilder(CompanyRoleCollectionTransfer::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+        ];
 
         $this->companyRoleTransferMocks = [
             $this->getMockBuilder(CompanyRoleTransfer::class)
@@ -128,9 +155,23 @@ class PermissionSynchronizerTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->companyRoleCriteriaFilterTransferMocks = [
+            $this->getMockBuilder(CompanyRoleCriteriaFilterTransfer::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+            $this->getMockBuilder(CompanyRoleCriteriaFilterTransfer::class)
+                ->disableOriginalConstructor()
+                ->getMock(),
+        ];
+
+        $this->paginationTransferMock = $this->getMockBuilder(PaginationTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->permissionSynchronizer = new PermissionSynchronizer(
             $this->companyTypeNameFilterMock,
             $this->permissionIntersectionMock,
+            $this->companyRoleCriteriaFilterBuilderMock,
             $this->companyRoleFacadeMock,
             $this->permissionFacadeMock,
             $this->configMock,
@@ -154,11 +195,33 @@ class PermissionSynchronizerTest extends Unit
             ->method('getPermissions')
             ->willReturn(new ArrayObject($this->permissionTransferMocks));
 
+        $this->companyRoleCriteriaFilterBuilderMock->expects(static::atLeastOnce())
+            ->method('buildByPageAndMaxPerPage')
+            ->withConsecutive([1, 1], [1, PermissionSynchronizer::PAGINATION_MAX_PER_PAGE])
+            ->willReturnOnConsecutiveCalls(
+                $this->companyRoleCriteriaFilterTransferMocks[0],
+                $this->companyRoleCriteriaFilterTransferMocks[1],
+            );
+
         $this->companyRoleFacadeMock->expects(static::atLeastOnce())
             ->method('getCompanyRoleCollection')
-            ->willReturn($this->companyRoleCollectionTransferMock);
+            ->withConsecutive(
+                [$this->companyRoleCriteriaFilterTransferMocks[0]],
+                [$this->companyRoleCriteriaFilterTransferMocks[1]],
+            )->willReturnOnConsecutiveCalls(
+                $this->companyRoleCollectionTransferMocks[0],
+                $this->companyRoleCollectionTransferMocks[1],
+            );
 
-        $this->companyRoleCollectionTransferMock->expects(static::atLeastOnce())
+        $this->companyRoleCollectionTransferMocks[0]->expects(static::atLeastOnce())
+            ->method('getPagination')
+            ->willReturn($this->paginationTransferMock);
+
+        $this->paginationTransferMock->expects(static::atLeastOnce())
+            ->method('getNbResults')
+            ->willReturn(count($this->companyRoleTransferMocks));
+
+        $this->companyRoleCollectionTransferMocks[1]->expects(static::atLeastOnce())
             ->method('getRoles')
             ->willReturn(new ArrayObject($this->companyRoleTransferMocks));
 

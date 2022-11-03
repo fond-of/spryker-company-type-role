@@ -2,6 +2,8 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilder;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidator;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilter;
@@ -74,6 +76,7 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
         return new PermissionSynchronizer(
             $this->createCompanyTypeNameFilter(),
             $this->createPermissionIntersection(),
+            $this->createCompanyRoleCriteriaFilterBuilder(),
             $this->getCompanyRoleFacade(),
             $this->getPermissionFacade(),
             $this->getConfig(),
@@ -126,6 +129,14 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     protected function createPermissionIntersection(): PermissionIntersectionInterface
     {
         return new PermissionIntersection();
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilderInterface
+     */
+    protected function createCompanyRoleCriteriaFilterBuilder(): CompanyRoleCriteriaFilterBuilderInterface
+    {
+        return new CompanyRoleCriteriaFilterBuilder();
     }
 
     /**

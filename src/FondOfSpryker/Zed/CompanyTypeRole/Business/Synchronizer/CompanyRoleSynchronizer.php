@@ -8,7 +8,6 @@ use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeInterface;
-use FondOfSpryker\Zed\CompanyUsersRestApi\Business\Reader\CompanyRoleCollectionReader;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
@@ -69,7 +68,6 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
             $companyRoleCollectionTransfer = $this->getCompanyRoleCollection($companyTransfer);
             $companyRoleCollectionTransfer = $this->setCompanyRoles($companyTransfer, $companyRoleCollectionTransfer);
         }
-
     }
 
     /**
@@ -80,7 +78,8 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
     protected function getCompanyRoleCollection(CompanyTransfer $companyTransfer): CompanyRoleCollectionTransfer
     {
         return $this->companyRoleFacade->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyTransfer->getIdCompany()));
+            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyTransfer->getIdCompany()),
+        );
     }
 
     /**
@@ -98,13 +97,13 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
         $companyRoleCollectionTransfer = $this->removeCompanyRoles(
             $currentCompanyRoleCollectionTransfer,
-            $configCompanyRoles
+            $configCompanyRoles,
         );
 
         $companyRoleCollectionTransfer = $this->addCompanyRoles(
             $companyTransfer,
             $companyRoleCollectionTransfer,
-            $configCompanyRoles
+            $configCompanyRoles,
         );
 
         return $companyRoleCollectionTransfer;
@@ -112,7 +111,9 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $currentCompanyRoleCollectionTransfer
-     * @param string[] $configCompanyRoles
+     * @param array<string> $configCompanyRoles
+     *
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
@@ -130,11 +131,12 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
             $companyRoleResponseTransfer = $this->companyRoleFacade->delete($companyRoleTransfer);
             if ($companyRoleResponseTransfer->getIsSuccessful() === false) {
                 throw new Exception(
-                    sprintf('Could not delete Company Role "%s" for the Company "%s", because %s.',
+                    sprintf(
+                        'Could not delete Company Role "%s" for the Company "%s", because %s.',
                         $companyRoleResponseTransfer->getCompanyRoleTransfer()->getName(),
                         $companyRoleResponseTransfer->getCompanyRoleTransfer()->getFkCompany(),
-                        $companyRoleResponseTransfer->getMessages()->offsetGet(0)->getText()
-                    )
+                        $companyRoleResponseTransfer->getMessages()->offsetGet(0)->getText(),
+                    ),
                 );
             }
         }
@@ -145,7 +147,9 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
-     * @param string[] $configCompanyRoles
+     * @param array<string> $configCompanyRoles
+     *
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
@@ -157,7 +161,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
         $companyRoles = $this->getNewCompanyRoles(
             $companyTransfer,
             $companyRoleCollectionTransfer,
-            $configCompanyRoles
+            $configCompanyRoles,
         );
 
         if (!$companyRoles->count()) {
@@ -169,18 +173,18 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
             if ($companyRoleResponseTransfer->getIsSuccessful() === false) {
                 throw new Exception(
-                    sprintf('Could not add Company Role "%s" for the Company "%s", because %s.',
+                    sprintf(
+                        'Could not add Company Role "%s" for the Company "%s", because %s.',
                         $companyRoleResponseTransfer->getCompanyRoleTransfer()->getName(),
                         $companyRoleResponseTransfer->getCompanyRoleTransfer()->getFkCompany(),
-                        $companyRoleResponseTransfer->getMessages()->offsetGet(0)->getText()
-                    )
+                        $companyRoleResponseTransfer->getMessages()->offsetGet(0)->getText(),
+                    ),
                 );
             }
 
             $companyRoleCollectionTransfer->getRoles()->append(
-                    $companyRoleResponseTransfer->getCompanyRoleTransfer()
+                $companyRoleResponseTransfer->getCompanyRoleTransfer(),
             );
-
         }
 
         return $companyRoleCollectionTransfer;
@@ -188,7 +192,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
-     * @param string[] $companyRoles
+     * @param array<string> $companyRoles
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyRoleTransfer>
      */
@@ -210,11 +214,11 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
-     * @param string[] $configCompanyRoles
+     * @param array<string> $configCompanyRoles
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyRoleTransfer>
      */
-    protected function getNewCompanyRoles (
+    protected function getNewCompanyRoles(
         CompanyTransfer $companyTransfer,
         CompanyRoleCollectionTransfer $currentCompanyRoleCollectionTransfer,
         array $configCompanyRoles
@@ -230,8 +234,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
         foreach ($newCompanyRoles as $companyRole) {
             $companyRoleCollectionTransfer->append((new CompanyRoleTransfer())
                     ->setFkCompany($companyTransfer->getIdCompany())
-                    ->setName($companyRole)
-            );
+                    ->setName($companyRole));
         }
 
         return $companyRoleCollectionTransfer;
@@ -240,7 +243,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
     /**
      * @param string $name
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getConfigCompanyRoles(string $name): array
     {

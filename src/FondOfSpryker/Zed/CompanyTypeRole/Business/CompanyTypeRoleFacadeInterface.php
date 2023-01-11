@@ -67,6 +67,17 @@ interface CompanyTypeRoleFacadeInterface
 
     /**
      * Specification:
+     * - Sync company type roles
+     * - Use config as basis for company type roles list
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncCompanyRoles(): void;
+
+    /**
+     * Specification:
      * - Retrieve assignable company roles
      *
      * @api

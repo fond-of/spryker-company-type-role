@@ -53,4 +53,14 @@ class CompanyTypeRoleToCompanyRoleFacadeBridge implements CompanyTypeRoleToCompa
     {
         $this->companyRoleFacade->update($companyRoleTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->companyRoleFacade->delete($companyRoleTransfer);
+    }
 }

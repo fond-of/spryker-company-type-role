@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole;
 
+use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyTypeFacadeBridge;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyUserFacadeBridge;
@@ -12,6 +13,11 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
@@ -46,11 +52,28 @@ class CompanyTypeRoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addCompanyTypeFacade($container);
         $container = $this->addPermissionFacade($container);
 
         return $this->addCompanyUserFacade($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY] = static function (Container $container) {
+            return new CompanyTypeRoleToCompanyFacadeBridge(
+                $container->getLocator()->company()->facade(),
+            );
+        };
+
+        return $container;
     }
 
     /**

@@ -31,4 +31,11 @@ interface CompanyTypeRoleToCompanyRoleFacadeInterface
      * @return void
      */
     public function update(CompanyRoleTransfer $companyRoleTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 }

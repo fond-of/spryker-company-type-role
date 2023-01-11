@@ -84,7 +84,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $currentCompanyRoleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
@@ -110,7 +110,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $currentCompanyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
      * @param array<string> $configCompanyRoles
      *
      * @throws \Exception
@@ -192,7 +192,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
-     * @param array<string> $companyRoles
+     * @param array<string> $configCompanyRoles
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyRoleTransfer>
      */
@@ -213,7 +213,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $currentCompanyRoleCollectionTransfer
      * @param array<string> $configCompanyRoles
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CompanyRoleTransfer>
@@ -224,6 +224,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
         array $configCompanyRoles
     ): ArrayObject {
         $companyRoleCollectionTransfer = new ArrayObject();
+        $currentCompanyRoles = [];
 
         foreach ($currentCompanyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
             $currentCompanyRoles[] = $companyRoleTransfer->getName();

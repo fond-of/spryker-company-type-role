@@ -2,18 +2,18 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade;
 
-use FondOfSpryker\Zed\Company\Business\CompanyFacadeInterface;
 use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Spryker\Zed\Company\Business\CompanyFacadeInterface;
 
 class CompanyTypeRoleToCompanyFacadeBridge implements CompanyTypeRoleToCompanyFacadeInterface
 {
     /**
-     * @var \FondOfSpryker\Zed\Company\Business\CompanyFacadeInterface
+     * @var \Spryker\Zed\Company\Business\CompanyFacadeInterface
      */
     protected $companyFacade;
 
     /**
-     * @param \FondOfSpryker\Zed\Company\Business\CompanyFacadeInterface $companyFacade
+     * @param \Spryker\Zed\Company\Business\CompanyFacadeInterface $companyFacade
      */
     public function __construct(CompanyFacadeInterface $companyFacade)
     {

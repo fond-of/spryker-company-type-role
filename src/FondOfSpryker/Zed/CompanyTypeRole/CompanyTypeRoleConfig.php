@@ -41,6 +41,11 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
     public const ROLE_NAME_PURCHASE = 'purchase';
 
     /**
+     * @var string
+     */
+    public const ROLE_NAME_SALES_COORDINATION = 'sales_coordination';
+
+    /**
      * @param string $companyTypeName
      *
      * @return array<\Generated\Shared\Transfer\CompanyRoleTransfer>
@@ -55,6 +60,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_ADMINISTRATION, true),
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_DISTRIBUTION, false),
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_CUSTOMER_SERVICE, false),
+            $this->createCompanyRole($companyTypeName, static::ROLE_NAME_SALES_COORDINATION, false),
         ];
 
         if ($companyTypeName === 'manufacturer') {

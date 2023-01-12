@@ -84,6 +84,18 @@ class CompanyTypeRoleFacade extends AbstractFacade implements CompanyTypeRoleFac
      *
      * @api
      *
+     * @return void
+     */
+    public function syncCompanyRoles(): void
+    {
+        $this->getFactory()->createCompanyRoleSynchronizer()->sync();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\AssignableCompanyRoleCriteriaFilterTransfer $assignableCompanyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer

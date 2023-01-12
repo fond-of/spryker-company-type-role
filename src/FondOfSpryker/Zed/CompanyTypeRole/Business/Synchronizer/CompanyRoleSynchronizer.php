@@ -66,7 +66,8 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
         foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
             $companyRoleCollectionTransfer = $this->getCompanyRoleCollection($companyTransfer);
-            $companyRoleCollectionTransfer = $this->setCompanyRoles($companyTransfer, $companyRoleCollectionTransfer);
+
+            $this->setCompanyRoles($companyTransfer, $companyRoleCollectionTransfer);
         }
     }
 
@@ -139,6 +140,33 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
                     ),
                 );
             }
+
+            $companyRoleCollectionTransfer = $this->removeCompanyRoleFromCollectionByName(
+                $companyRoleCollectionTransfer,
+                $companyRoleTransfer->getName()
+            );
+        }
+
+        return $companyRoleCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    protected function removeCompanyRoleFromCollectionByName(
+        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer,
+        string $name
+    ): CompanyRoleCollectionTransfer {
+        foreach ($companyRoleCollectionTransfer->getRoles() as $index => $companyRoleTransfer) {
+
+            if ($companyRoleTransfer->getName() !== $name) {
+                continue;
+            }
+
+            $companyRoleCollectionTransfer->getRoles()->offsetUnset($index);
         }
 
         return $companyRoleCollectionTransfer;
@@ -182,9 +210,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
                 );
             }
 
-            $companyRoleCollectionTransfer->getRoles()->append(
-                $companyRoleResponseTransfer->getCompanyRoleTransfer(),
-            );
+            $companyRoleCollectionTransfer->getRoles()->append($companyRoleResponseTransfer->getCompanyRoleTransfer());
         }
 
         return $companyRoleCollectionTransfer;
@@ -234,8 +260,8 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
         foreach ($newCompanyRoles as $companyRole) {
             $companyRoleCollectionTransfer->append((new CompanyRoleTransfer())
-                    ->setFkCompany($companyTransfer->getIdCompany())
-                    ->setName($companyRole));
+                ->setFkCompany($companyTransfer->getIdCompany())
+                ->setName($companyRole));
         }
 
         return $companyRoleCollectionTransfer;

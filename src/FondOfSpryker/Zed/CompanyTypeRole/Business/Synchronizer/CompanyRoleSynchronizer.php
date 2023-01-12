@@ -143,7 +143,7 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
 
             $companyRoleCollectionTransfer = $this->removeCompanyRoleFromCollectionByName(
                 $companyRoleCollectionTransfer,
-                $companyRoleTransfer->getName()
+                $companyRoleTransfer->getName(),
             );
         }
 
@@ -161,7 +161,6 @@ class CompanyRoleSynchronizer implements CompanyRoleSynchronizerInterface
         string $name
     ): CompanyRoleCollectionTransfer {
         foreach ($companyRoleCollectionTransfer->getRoles() as $index => $companyRoleTransfer) {
-
             if ($companyRoleTransfer->getName() !== $name) {
                 continue;
             }

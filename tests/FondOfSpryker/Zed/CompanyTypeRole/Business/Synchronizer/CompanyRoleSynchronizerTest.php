@@ -188,6 +188,8 @@ class CompanyRoleSynchronizerTest extends Unit
             ->willReturnOnConsecutiveCalls(
                 'company-role',
                 'company-role-delete',
+                'company-role-delete',
+                'company-role-delete',
                 'company-role-add',
             );
 

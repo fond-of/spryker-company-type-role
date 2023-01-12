@@ -3,8 +3,8 @@
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer;
 
 use ArrayObject;
-use Exception;
 use Codeception\Test\Unit;
+use Exception;
 use FondOfSpryker\Zed\CompanyTypeRole\CompanyTypeRoleConfig;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyFacadeInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Dependency\Facade\CompanyTypeRoleToCompanyRoleFacadeInterface;
@@ -134,7 +134,7 @@ class CompanyRoleSynchronizerTest extends Unit
             $this->companyFacadeMock,
             $this->companyRoleFacadeMock,
             $this->companyTypeFacadeMock,
-            $this->configMock
+            $this->configMock,
         );
     }
 
@@ -188,7 +188,7 @@ class CompanyRoleSynchronizerTest extends Unit
             ->willReturnOnConsecutiveCalls(
                 'company-role',
                 'company-role-delete',
-                'company-role-add'
+                'company-role-add',
             );
 
         $this->companyRoleFacadeMock->expects(static::atLeastOnce())
@@ -257,7 +257,7 @@ class CompanyRoleSynchronizerTest extends Unit
             ->method('getName')
             ->willReturnOnConsecutiveCalls(
                 'company-role',
-                'company-role-delete'
+                'company-role-delete',
             );
 
         $this->companyRoleFacadeMock->expects(static::atLeastOnce())
@@ -279,7 +279,6 @@ class CompanyRoleSynchronizerTest extends Unit
         $this->responseMessageTransferMock->expects(static::atLeastOnce())
             ->method('getText')
             ->willReturn('error');
-
 
         $this->expectException(Exception::class);
 
@@ -339,7 +338,7 @@ class CompanyRoleSynchronizerTest extends Unit
             ->willReturnOnConsecutiveCalls(
                 'company-role',
                 'company-role-delete',
-                'company-role-add'
+                'company-role-add',
             );
 
         $this->companyRoleFacadeMock->expects(static::atLeastOnce())
@@ -350,7 +349,7 @@ class CompanyRoleSynchronizerTest extends Unit
             ->method('getIsSuccessful')
             ->willReturnOnConsecutiveCalls(
                 true,
-                false
+                false,
             );
 
         $this->companyRoleFacadeMock->expects(static::atLeastOnce())
@@ -368,7 +367,6 @@ class CompanyRoleSynchronizerTest extends Unit
         $this->responseMessageTransferMock->expects(static::atLeastOnce())
             ->method('getText')
             ->willReturn('error');
-
 
         $this->expectException(Exception::class);
 
@@ -471,8 +469,8 @@ class CompanyRoleSynchronizerTest extends Unit
             ->method('getName')
             ->willReturnOnConsecutiveCalls(
                 'company-role',
-                        'company-role2',
-                        'company-role'
+                'company-role2',
+                'company-role',
             );
 
         $this->companyRoleFacadeMock->expects(static::atLeastOnce())
@@ -497,7 +495,7 @@ class CompanyRoleSynchronizerTest extends Unit
 
         $this->companyCollectionTransferMock->expects(static::atLeastOnce())
             ->method('getCompanies')
-            ->willReturn(new \ArrayObject());
+            ->willReturn(new ArrayObject());
 
         $this->synchronizer->sync();
     }

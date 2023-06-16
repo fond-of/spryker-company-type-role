@@ -28,6 +28,11 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    public const ROLE_NAME_SUPER_DISTRIBUTION = 'super_distribution';
+
+    /**
+     * @var string
+     */
     public const ROLE_NAME_ADMINISTRATION = 'administration';
 
     /**
@@ -59,6 +64,7 @@ class CompanyTypeRoleConfig extends AbstractBundleConfig
         $predefinedRoles = [
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_ADMINISTRATION, true),
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_DISTRIBUTION, false),
+            $this->createCompanyRole($companyTypeName, static::ROLE_NAME_SUPER_DISTRIBUTION, false),
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_CUSTOMER_SERVICE, false),
             $this->createCompanyRole($companyTypeName, static::ROLE_NAME_SALES_COORDINATION, false),
         ];

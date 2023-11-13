@@ -2,24 +2,26 @@
 
 namespace FondOfSpryker\Zed\CompanyTypeRole\Business;
 
-use FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilder;
-use FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidator;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\CompanyTypeRoleExportValidator\CompanyTypeRoleExportValidatorInterface;
-use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilter;
-use FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGenerator;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Generator\AssignPermissionKeyGeneratorInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersection;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Mapper\PermissionKeyMapper;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Mapper\PermissionKeyMapperInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssigner;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\CompanyRoleAssignerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReader;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Model\PermissionReaderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReader;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\AssignableCompanyRoleReaderInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyRoleReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyRoleReaderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReader;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyUserReaderInterface;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\PermissionReader as NewPermissionReader;
+use FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\PermissionReaderInterface as NewPermissionReaderInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\CompanyRoleSynchronizer;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\CompanyRoleSynchronizerInterface;
 use FondOfSpryker\Zed\CompanyTypeRole\Business\Synchronizer\PermissionSynchronizer;
@@ -77,13 +79,41 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     public function createPermissionSynchronizer(): PermissionSynchronizerInterface
     {
         return new PermissionSynchronizer(
-            $this->createCompanyTypeNameFilter(),
-            $this->createPermissionIntersection(),
-            $this->createCompanyRoleCriteriaFilterBuilder(),
+            $this->createCompanyRoleReader(),
             $this->getCompanyRoleFacade(),
-            $this->getPermissionFacade(),
-            $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\CompanyRoleReaderInterface
+     */
+    protected function createCompanyRoleReader(): CompanyRoleReaderInterface
+    {
+        return new CompanyRoleReader(
+            $this->createNewPermissionReader(),
+            $this->createPermissionKeyMapper(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Reader\PermissionReaderInterface
+     */
+    protected function createNewPermissionReader(): NewPermissionReaderInterface
+    {
+        return new NewPermissionReader(
+            $this->createPermissionIntersection(),
+            $this->getConfig(),
+            $this->getPermissionFacade(),
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Mapper\PermissionKeyMapperInterface
+     */
+    protected function createPermissionKeyMapper(): PermissionKeyMapperInterface
+    {
+        return new PermissionKeyMapper();
     }
 
     /**
@@ -132,27 +162,11 @@ class CompanyTypeRoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Filter\CompanyTypeNameFilterInterface
-     */
-    protected function createCompanyTypeNameFilter(): CompanyTypeNameFilterInterface
-    {
-        return new CompanyTypeNameFilter($this->getCompanyTypeFacade());
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Intersection\PermissionIntersectionInterface
      */
     protected function createPermissionIntersection(): PermissionIntersectionInterface
     {
         return new PermissionIntersection();
-    }
-
-    /**
-     * @return \FondOfSpryker\Zed\CompanyTypeRole\Business\Builder\CompanyRoleCriteriaFilterBuilderInterface
-     */
-    protected function createCompanyRoleCriteriaFilterBuilder(): CompanyRoleCriteriaFilterBuilderInterface
-    {
-        return new CompanyRoleCriteriaFilterBuilder();
     }
 
     /**

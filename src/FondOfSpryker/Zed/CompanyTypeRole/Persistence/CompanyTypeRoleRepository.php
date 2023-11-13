@@ -62,6 +62,7 @@ class CompanyTypeRoleRepository extends AbstractRepository implements CompanyTyp
             );
         }
 
+        // @phpstan-ignore-next-line
         return SpyCompanyRoleQuery::create()
             ->useSpyCompanyRoleToPermissionQuery()
                 ->innerJoinPermission()

@@ -19,10 +19,6 @@ class CompanyMapper implements CompanyMapperInterface
     {
         $spyCompany = $spyCompanyRole->getCompany();
 
-        if ($spyCompany === null) {
-            return null;
-        }
-
         return (new CompanyTransfer())
             ->fromArray($spyCompany->toArray(), true);
     }
